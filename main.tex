@@ -1,0 +1,2005 @@
+\documentclass{article}
+\input{preamble.tex}
+
+\addbibresource{mybib.bib}
+
+\begin{document}
+
+\title{The adic Fargues--Fontaine curve}
+
+\author{Ken Lee}
+\date{February 2025}
+\maketitle
+
+\begin{abstract}
+  These are expanded notes for a talk on the adic Fargues--Fontaine curve.
+\end{abstract}
+
+\tableofcontents
+
+\section{Motivation : geometrization of $\ell$-adic local Langlands}
+
+This section is largely informal.
+We begin with local class field theory.
+
+\begin{eg}
+  Let $\bQ_p^{\mathrm{ab}} / \bQ_p$ be the maximal abelian extension of $\bQ_p$.
+  The local Kronecker--Weber theorem says
+  $\bQ_p^\mathrm{ab} = \bQ_p(\mu_{\bN}) = 
+  \bQ_p(\mu_{p^\infty}) \breve{\bQ}_p$ where
+  $\breve{\bQ}_p = \bQ_p(\bigcup_{(N , p) = 1} \mu_N)$
+  is the maximal unramified extension of $\bQ_p$.
+  Then we have : 
+  \begin{cd}
+    1 & {\mathrm{Gal}(\mathbb{Q}_p^\mathrm{ab} / \mathbb{Q}_p^\mathrm{ur})} & {\mathrm{Gal}(\mathbb{Q}_p^\mathrm{ab} / \mathbb{Q}_p)} & {\mathrm{Gal}(\overline{\mathbb{F}_p} / \mathbb{F}_p)} & 1 \\
+    1 & {\mathrm{Gal}(\mathbb{Q}_p(\mu_{p^\infty}) / \mathbb{Q}_p)} & {W^{\mathrm{ab}}} & {\mathrm{Frob}^{\mathbb{Z}}} & 1 \\
+    1 & {\mathbb{Z}_p^\times} & {\mathbb{Q}_p^\times} & {p^\mathbb{Z}} & 1
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow["\simeq"{description}, draw=none, from=1-2, to=2-2]
+    \arrow[from=1-3, to=1-4]
+    \arrow[from=1-4, to=1-5]
+    \arrow[hook', from=2-3, to=1-3]
+    \arrow[hook', from=2-4, to=1-4]
+    \arrow[from=3-1, to=3-2]
+    \arrow["\simeq"{description}, draw=none, from=3-2, to=2-2]
+    \arrow[from=3-2, to=3-3]
+    \arrow["\simeq"{description}, draw=none, from=3-3, to=2-3]
+    \arrow[from=3-3, to=3-4]
+    \arrow["\simeq"{description}, draw=none, from=3-4, to=2-4]
+    \arrow[from=3-4, to=3-5]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=2-2, to=2-3]
+    \arrow[from=2-3, to=2-4]
+    \arrow[from=2-4, to=2-5]
+  \end{cd}
+  Local class field theory is the isomorphism of the middle row
+  to the bottom row.
+  The isomorphism $\bQ_p^\times \simeq W^\mathrm{ab}$
+  is the local Artin reciprocity map.
+\end{eg}
+The above can be seen as saying 
+we have a correspondence
+\begin{align*}
+  \text{1-dim reps of $\GL_1(\bQ_p)$ } \leftrightarrow 
+  \text{ 1-dim reps of $W$}
+\end{align*}
+where $W \subs \GAL(\overline{\bQ_p} / \bQ_p)$ 
+is the preimage of $\FROB^\bZ \subs \GAL(\overline{\bF_p} / \bF_p)$.
+More generally, $\ell$-adic local Langlands for $\GL_n$ and $\bQ_p$
+says there is a ``nice'' correspondence 
+\begin{align*}
+  \text{$\ell$-adic reps of $\GL_n(\bQ_p)$} \leftrightarrow 
+  \text{ group morphisms $W \to \GL_n(\bZ_\ell)$}
+\end{align*}
+More generally still, 
+$\ell$-adic local Langlands for 
+a connected reductive group $G$ over $\bQ_p$ 
+is about understanding the relation between \[
+  \text{$\ell$-adic reps of $G(\bQ_p)$ }
+  \overset{?}{\leftrightsquigarrow}
+  \text{continuous group sections $W \to \widehat{G}(\bZ_\ell) \rtimes W$}
+\]
+where \begin{enumerate}
+  \item $\widehat{G}$ is the connected reductive group over $\bZ_\ell$
+  with root datum dual to $G \times_{\bQ_p} \overline{\bQ_p}$.
+  \item The Weil group $W$ acts on the root datum of 
+  $G \times_{\bQ_p} \overline{\bQ_p}$
+  and hence on $\widehat{G}$ and its $\bZ_\ell$-points.
+  The semi-direct product $\widehat{G}(\bZ_\ell) \rtimes W$
+  is formed using this action.
+\end{enumerate}
+Objects on the right are called \emph{$L$-parameters}.
+\cite[Def. VIII.1.1.]{FS24}
+We have the following questions : 
+\begin{enumerate}
+  \item [Q1] How does the dual group $\widehat{G}$ appear?
+  \item [Q2] What does $W$ have to do with the representation theory of $G(E)$?
+\end{enumerate}
+The heuristic of \cite{FS24} is as follows : 
+\begin{enumerate}
+  \item [Step 0] In the setting of 
+  geometric Langlands of function fields
+  of smooth projective curves $X$ over either finite fields or $\bC$,
+  the above two questions are understood better.
+  \begin{enumerate}
+    \item [A1] $\widehat{G}$ comes from the study of 
+    modifications of $G$-bundles locally around a point,
+    i.e. geometric Satake.
+    \item [A2] This comes from excursion operators of \cite{Laf18}.
+  \end{enumerate}
+  \item [Step 1] 
+  The map $\SPEC \bC_p \to (\SPEC \breve{\bQ}_p) / \varphi^\bZ$
+  is a $W$-torsor so at least in the $\GL_n$ case,
+  we should think about $L$-parameters as $\ell$-adic
+  rank $n$ local systems on $(\SPEC \breve{\bQ}_p) / \varphi^\bZ$.
+  This raises the idea of ``unramified geometric Langlands
+  over $(\SPEC \breve{\bQ}_p) / \varphi^\bZ$''.
+  
+  \item [Step 2]
+  For any hope of geometric Satake and excursion operators 
+  over $(\SPEC \breve{\bQ}_p) / \varphi^\bZ$,
+  we need a moduli of $G$-torsors over 
+  $(\SPEC \breve{\bQ}_p) / \varphi^\bZ$.
+  Observe that \[
+    (\SPEC \breve{\bQ}_p) / \varphi^\bZ = 
+    (\SPEC W(\overline{\bF_p})[1 / p]) / \varphi^\bZ
+  \]
+  where $W(\_)$ is the functor of Witt vectors on perfect $\bF_p$-algebras 
+  and $\varphi$ comes from lifting the Frobenius
+  automorphism of $\overline{\bF_p}$.
+  The idea of \cite{FS24} is to 
+  think of the above as 
+  \[
+    \text{``$(\SPEC \overline{\bF_p} \times \SPEC \bQ_p )
+    / (\varphi^\bZ \times \id)$''}
+  \]
+  and replace $\overline{\bF_p}$ with perfectoids $S$ over $\bF_p$.
+  We thus want to consider : 
+  \[
+    X_S := \text{``$(S \times \SPEC \bQ_p)
+    / (\varphi^\bZ \times \id)$''}
+  \]
+\end{enumerate}
+The formula for $\breve{\bQ}_p$ suggests the following definition.
+\begin{dfn}
+
+  For $S = \SPA (C , \cO_C)$ where 
+  $C$ is a perfectoid field of characteristic $p$,
+  \[
+    X_C := (\SPA W(\cO_C) \setminus V([\pi] p)) / \varphi^\bZ
+  \]
+  where $\pi \in \cO_C$ is a pseudo-uniformizer of $C$.
+  This is the \emph{adic Fargues--Fontaine curve over $C$}.
+  More generally,
+  for $S = \SPA(A , A^+)$ an affinoid perfectoid in characteristic $p$,
+  \[
+    X_S := (\SPA W(A^+) \setminus V([\pi] p)) / \varphi^\bZ
+  \]
+  where $\pi \in A^+$ is a pseudo-uniformizer of $A$.
+  This is the \emph{relative Fargues--Fontaine curve $X_S$ over $S$}.
+\end{dfn}
+The product $S \times \SPEC \bQ_p$ gives the empty scheme,
+and similarly for $S \times_{\SPA \bZ} \SPA(\bQ_p , \bZ_p)$.
+But one can show that the associated diamond of $X_S$
+can be identified with
+\[
+  X_S^\diamond = (S \times \SPD \bQ_p) / (\varphi^\bZ \times \id)
+\]
+
+\textbf{Warning} : 
+Since $(W(A^+) , W(A^+))$ is not discrete,
+nor finite type over a Noetherian ring, nor strongly Noetherian,
+nor sousperfectoid,
+it is a priori not even clear that we have an adic space
+before modding by the action of $\varphi$.
+We make this precise in the section on adic spaces as functors.
+
+\section{Holomorphic functions in the variable $p$}
+
+Before anything, we give some intuition for the the case over a point.
+First, a reminder of how the tilting equivalence works,
+with a few extra details.
+% For this, I find the theory of Witt vectors helpful.
+% The key is the following lemma : 
+% \begin{lem}
+%   Let $A , B$ be rings
+%   and $\bar{f} : A / p A \to B / p B$ a morphism of rings.
+%   Assume $A / p A$ is \emph{perfect},
+%   i.e. the Frobenius map $x \mapsto x^p$ is an isomorphism.
+%   Then there is a unique multiplicative map
+%   $\bar{f}_n$ such that the diagram of multiplicative monoids commute
+%   \begin{cd}
+%     & {B / p^{n+1} B} \\
+%     {A / pA} & {B / pB}
+%     \arrow[from=1-2, to=2-2]
+%     \arrow["{\bar{f}_n}", dashed, from=2-1, to=1-2]
+%     \arrow["{\bar{f}}"', from=2-1, to=2-2]
+%   \end{cd}
+%   \begin{proof1}(Skip in talk)
+%     We first define $\bar{f}_n$.
+%     Let $x \in A / p A$.
+%     For lifts $y_n , \tilde{y}_n \in B$ of $\bar{f}(x)$,
+%     we do not neccesarily have $y_n = \tilde{y}_n \in B / p^{n+1} B$.
+%     However by the binomial theorem we do have the following observation : 
+%     \begin{align}
+%       y_n = \tilde{y}_n \in B / pB 
+%       \implies y_n^{p^n} = \tilde{y}_n^{p^n} \in B / p^{n+1} B
+%     \end{align}
+%     Inspired by this observation, one proceeds as follows : 
+%     \begin{enumerate}
+%       \item Because $A / p A$ is perfect,
+%       there exists a unique $x^{1 / p^n} \in A / pA$ such that
+%       $(x^{1 / p^n})^{p^n} = x$.
+%       \item Let $y_n \in$
+%       be \emph{any} lift of $\bar{f}(x^{1 / p^n})$.
+%       \item Define $\bar{f}_n(x) := (y_n)^{p^n}$ in $B / p^{n+1} B$.
+%       By observation (1),
+%       this only depends $y_n$ mod $p$ which is $\bar{f}(x^{1 / p^n})$.
+%       In particular $\bar{f}_n$ is unique.
+%       \item Multiplicativity is a straightforward calculation.
+%     \end{enumerate}
+%   \end{proof1}
+% \end{lem}
+% If $A$ has perfect reduction mod $p$ and is $p$-adically complete,
+% we can apply the above lemma to the identity of $A / p A$
+% to obtain a multiplicative section \[
+%   [\_] : A / p A \to A
+% \]
+% This is called the \emph{Teichmuller lift}.
+% We can then expand elements of $A$ as power series in $p$ with
+% coefficients in Teichmuller lifts.
+% One can use this to lift morphisms on mod $p$ reductions.
+% \begin{prop}[Theory of Witt vectors]
+%   Define a \emph{strict $p$-ring} as a ring which is 
+%   \begin{enumerate}
+%     \item (Existence of Teichmuller expansion) 
+%     $p$-adically complete, perfect modulo $p$
+%     \item (Uniqueness of Teichmuller expansion) $p$-torsion-free
+%   \end{enumerate}
+%   Then the following are true : 
+%   \begin{enumerate}
+%     \item Let $A$ be a strict $p$-ring
+%     and $B$ $p$-adically complete.
+%     For $\bar{f} : A / p A \to B / p B$ a ring morphism,
+%     define $f : A \to B$ by
+%     \begin{cd}
+%       A & B & {} \\
+%       {A / p A} & {B / p B} & {}
+%       \arrow["f", from=1-1, to=1-2]
+%       \arrow[from=1-1, to=2-1]
+%       \arrow[from=1-2, to=2-2]
+%       \arrow["{f^\sharp}"{description}, from=2-1, to=1-2]
+%       \arrow["{\bar{f}}"', from=2-1, to=2-2]
+%       \arrow["{f(x) = \sum_{n \geq 0} f^\sharp(\bar{x_n}) p^n}",
+%         from=1-3, to=2-3, draw = none]
+%     \end{cd}
+%     where $x = \sum_{n \geq 0} [\bar{x_n}] p^n$ is the
+%     unique expansion in terms of Teichmuller lifts
+%     and $f^\sharp$ is the section obtained from the previous lemma.
+%     Then $f$ is the unique ring morphism such that 
+%     $\bar{f}$ mod $p$.
+%     In particular, 
+%     reduction mod $p$ is fully faithful on strict $p$-rings.
+%     \item (Essentially surjective) 
+%     For any perfect $\bF_p$-algebra $C$,
+%     there exists a strict $p$-ring $W(C)$ such that
+%     $W(C) / p W(C) \simeq C$.
+%   \end{enumerate}
+%   Thus, mod $p$ yields an equivalence between
+%   the category of strict $p$-rings and the category of perfect $\bF_p$-algebras.
+
+% \end{prop}
+% A reminder of the following example of tilting for perfectoid fields :
+% \begin{eg}
+%   Let $K := \bQ_p^\infty := \bZ_p[p^{1 / p^\infty}]^\wedge_p[1 / p]$.
+%   One can define \begin{align*}
+%     \cO_K^\flat := \LIM_{\phi} \cO_K / (p)\simeq \bF_p[[t^{1 / p^\infty}]]^\wedge_t &&
+%     K^\flat := \FRAC\, \cO_K^\flat \simeq \bF_p((t^{1 / p^\infty}))
+%   \end{align*}
+%   where $t = (p , p^{1 / p} , p^{1 / p^2} , \dots)$.
+%   Furthermore, we can recover $K$ from $K^\flat$ via the theory of Witt vectors.
+%   \[\begin{tikzcd}
+% 	  {W(\mathbb{F}_p[[t^{1 / p^\infty}]]^\wedge_t)} 
+%       & {\mathbb{Z}_p[p^{1 / p^\infty}]^\wedge_p} 
+%       & {\theta(x) = 
+%       \theta(\sum_{n \geq 0} [\bar{x_n}] p^n)
+%       := \sum_{n \geq 0} \bar{x_n}^\sharp p^n}\\
+% 	  {\mathbb{F}_p[[t^{1 / p^\infty}]]^\wedge_t} 
+%       & {\mathbb{Z}_p[p^{1 / p^\infty}]^\wedge_p / (p)}
+%       &
+% 	  \arrow["\theta", from=1-1, to=1-2]
+% 	  \arrow[from=1-1, to=2-1]
+% 	  \arrow[from=1-2, to=2-2]
+% 	  \arrow["{\_^\sharp}"{description}, from=2-1, to=1-2]
+% 	  \arrow[from=2-1, to=2-2]
+%     \end{tikzcd}\]
+%   We can prove $\theta$ is surjective.
+%   $\bZ_p[p^{1 / p^\infty}]^\wedge_p / (p)$ has surjective Frobenius
+%   so $\bF_p[[t^{1 / p^\infty}]]^\wedge 
+%   \to \bZ_p[p^{1 / p^\infty}]^\wedge_p / (p)$
+%   is surjective.
+%   Choosing a section gives 
+%   a system of coefficients for $\bZ_p[p^{1 / p^\infty}]^\wedge_p$ 
+%   factoring through $\theta$.
+%   \[
+%     \bZ_p[p^{1 / p^\infty}]^\wedge_p / (p) \map{}{}
+%     \bF_p[[t^{1 / p^\infty}]]^\wedge_t \map{[\_]}{}
+%     W(\bF_p[[t^{1 / p^\infty}]]^\wedge_t) \map{\theta}{}
+%     \bZ_p[p^{1 / p^\infty}]^\wedge_p
+%   \]
+%   This implies $\theta$ is surjective.
+%   We have \[
+%     \theta([t]) = t^\sharp = \lim_{n \to \infty} (p^{1 / p^n})^{p^n}
+%     = p
+%   \]
+%   so $p - [t] \in \ker \theta$. One can show $(p - [t]) = \ker \theta$.
+% \end{eg}
+% The general phenomenon is the following : 
+\begin{prop}[Tilting correspondence / Classification of untilts]
+  
+  Define the following category : 
+  \begin{itemize}
+    \item objects are $(F , I)$
+    where $F$ is a perfectoid field of characteristic $p$
+    and $I \subs W(F^{\circ})$ which is generated by
+    a \emph{primitive element of degree 1}.
+    These are elements $x \in W(F^\circ)$
+    with Teichmuller expansion \[
+      x = [\bar{x}_0] + [\bar{x}_1] p^1 + \cdots
+    \]
+    where $\bar{x}_0 \in F^{\circ\circ}$ and
+    $\bar{x}_1 \in (F^\circ)^\times$.\footnote{
+      In \cite[Def. 2.2.1]{FF18},
+      $\bar{x}_0$ is required to be non-zero.
+      This has the effect of excluding the (unique up to isomorphism)
+      characteristic $p$ untilt.
+      The definition here argees with
+      \cite[Def. 6.2.9]{SW20}.
+    }
+    
+    \item a morphism $(F , I) \to (F_1 , I_1)$
+    is a continuous ring morphism $F \to F_1$ which
+    sends $I$ into $I_1$ under the corresponding 
+    ring morphism $W(F) \to W(F_1)$.
+  \end{itemize}
+  We have an equivalence : 
+  \begin{cd}
+    \begin{matrix}
+      \text{
+        category of perfectoid fields $K$
+      } \\
+      \text{with continuous ring morphisms}
+    \end{matrix}
+    & \text{
+      category of $(F , I)$
+    }
+    \arrow[from=1-1, to=1-2 , "{\sim}"]
+    \arrow[from=1-2, to=1-1]
+  \end{cd}
+  The two functors on objects are \begin{enumerate}
+    \item Given a perfectoid field $K$,
+    take $(K^\flat , \ker \theta \subs W(K^{\flat , \circ}))$.
+    The norm on $K^\flat$ can be defined through
+    \[
+      K^{\flat , \circ} \map{\_^\sharp}{} 
+      K^\circ \map{\abs{\_}}{} \bR_{\geq 0}
+    \]
+    \item Given $(F , I)$, form
+    $F^{\sharp , \circ} := W(F^\circ) / I$.
+    For $x \in F^{\sharp , \circ}$
+    there exists $\tilde{x} \in F^\circ$ 
+    unique up to $(F^\circ)^\times$ such that
+    $[\tilde{x}] = x$ in $F^{\sharp , \circ}$.
+    Defining $\abs{x} := \abs{\tilde{x}}$ defines
+    a norm on $F^{\sharp , \circ}$ making it a rank 1 valuation ring
+    and $F^\sharp := \FRAC \, F^{\sharp , \circ}$ a perfectoid field.
+  \end{enumerate}
+  \cite[Theorem 1.5.1]{Ked15}
+\end{prop}
+
+\begin{dfn}[Radius of untilts]
+  Fix a perfectoid field $F$ of characteristic $p$.
+  An untilt of $F$ is defined
+  as the data $(K , \io)$ where 
+  \begin{itemize}
+    \item $K$ is a perfectoid field
+    \item $\io : K^\flat \simeq F$ is a bi-continuous ring isomorphism.
+  \end{itemize}
+  By the theory of Witt vectors, $\io$ corresponds
+  to a morphism between Witt vectors : 
+  \begin{cd}
+    {W(K^{\flat , \circ})} & {K^\circ} \\
+    {W(F^\circ)} & {W(F^\circ) / (p - [\iota(p^\flat)])}
+    \arrow["\theta", two heads, from=1-1, to=1-2]
+    \arrow["\sim"', from=1-1, to=2-1]
+    \arrow["\sim", from=1-2, to=2-2]
+    \arrow[two heads, from=2-1, to=2-2]
+  \end{cd}
+  which yields a bi-continuous ring isomorphism
+  $K \simeq \FRAC\, W(F^\circ) / (p - [\io(p^\flat)])$.
+  Here $p^\flat \in K^\flat$ is either
+  \begin{enumerate}
+    \item zero when $K$ is characteristic $p$
+    \item a pseudo-uniformizer coming from a choice of
+    perfectoid pseudo-uniformizer in $K$.
+  \end{enumerate}
+  In either cases, the norm of $p^\flat$ is independent of choices,
+  and so we have a well-defined number \[
+    r(K , \io) := \abs{\io(p^\flat)}_F \in [0 , 1)
+  \]
+  This is called the \emph{radius}.
+  A morphism of untilts $(K_1 , \io_1) \to (K_2 , \io_2)$ is
+  a continuous ring morphism $\al : K_1 \to K_2$
+  such that $\io_2 = \al^\flat \io_1$.
+\end{dfn}
+Isomorphic untilts gives rise to the same radius
+and up to isomorphism $F$ is the only untilt of itself with radius zero.
+This gives rise to the following heuristic :
+\begin{align*}
+  \abs{\cY_F} := \set{\text{Untilts of $F$}}/\simeq 
+  && \set{\abs{z} < 1} \subs \bC \\
+  p \in W(F^\circ) && \text{ coordinate function $z$} \\
+  K \mapsto \abs{p}_K && z \mapsto \abs{z} \\
+  f \in W(F^\circ) && \sum_{n = 0}^\infty c_n z^n 
+    \text{ s.t. $\abs{c_n}$ bounded} \\
+  ??? && \text{ring of holomorphic functions on $\set{\abs{z} < 1} \subs \bC$}
+\end{align*}
+Intuitively,
+a holomorphic function on $\set{\abs{z} < 1}$
+is a compatible family of holomorphic functions on 
+$\set{a \leq \abs{z} \leq b}$ ranging over $[a , b] \subs [0 , 1)$.
+Making rigorous the rings of ``holomorphic functions in variable $p$
+on $a \leq \abs{p} \leq b$'' will give us an analytic space over $\bZ_p$
+playing the role of $\set{\abs{z} < 1} \subs \bC$.
+For the purposes of defining the Fargues--Fontaine curve,
+we will jump forward to describing the holomorphic functions 
+on ``$0 < \abs{p} < 1$''.
+
+\section{Defining adic spaces without using adic spectrum}
+
+I want to define adic spaces without using adic spectrum
+because : 
+\begin{enumerate}
+  \item As mentioned before, $W(R^+)$ is not sheafy so
+  $\SPA W(R^+)$ already falls out of 
+  category (V). (For the definition, see \cite[Def. 3.2.1]{SW20}.)
+  \item \cite[Prop. 11.2.1]{SW20} does not explicitly define
+  $\cY_S := \SPA W(R^+) \setminus V([\pi])$ 
+  as an object of category (V).
+  The underlying topological space is conceivable,
+  however defining a structure presheaf and showing it is a sheaf
+  looks like non-trivial work.
+  \item Verifying the sheaf condition on structure presheaves
+  requires an understanding of the underlying topological space.
+  I find adic spectra difficult to compute.
+\end{enumerate}
+In the end,
+no matter what theory of adic spaces one chooses,
+it should always be the case that a filtered colimit of
+sheafy affinoids along rational localizations gives an adic space.
+The relative Fargues--Fontaine curve $X_S$ will be such a colimit.
+We develop adic geometry completely analogously to 
+algebraic geometry using functor of points in the following steps : 
+\begin{enumerate}
+  \item We define affinoids as
+  dual to sheafy complete Huber pairs
+  and introduce the Grothendieck topology given by rational covers.
+  \item
+  Define adic spaces as living in the sheaf topos over affinoids
+  in the same way as schemes can be defined for algebraic geometry.
+\end{enumerate}
+This is more restrictive than 
+the theory of pre-adic spaces in \cite[Section 3.4]{SW20}.
+We chose to do this because 
+we think sheafifying representables is too opaque;
+every reasonable site structure should be subcanonical.
+A different fix, which requires more machinary,
+is to realise that
+every complete Huber pair is sheafy in a derived sense,
+e.g. in the Clausen--Scholze theory of analytic stacks.
+\begin{dfn}
+  
+  Define $\widetilde{\AFF}$ as
+  opposite to the category of complete Huber pairs
+  with continuous ring morphisms preserving subrings of integral elements.
+  For $(A , A^+)$ complete Huber,
+  we write $\widetilde{\SPA}(A , A^+)$ for the corresponding object in
+  $\widetilde{\AFF}$.
+
+  Define $\AFF \subs \widetilde{\AFF}$ as the full subcategory
+  dual to sheafy complete Huber pairs.
+  We write $\SPA (A , A^+)$ similarly.
+
+  We identify $\widetilde{\AFF} , \AFF$ with
+  their essential images in presheaves under the Yoneda embedding.
+  We reserve the term \emph{affinoid} for objects in $\AFF$.
+\end{dfn}
+A reminder for the procedure to compute rational localizations.
+This works for $\widetilde{\AFF}$.
+\begin{prop}[Rational localization]
+  Let $(R , R^+)$ be a complete Huber pair.
+  Let $s \in R$ and $T \subs R$ finite subset with $TR \subs R$ open.
+  Consider the subfunctor 
+  $\set{\abs{t} \leq \abs{s} \neq 0 \st t \in T} \subs \widetilde{\SPA}(R , R^+)$
+  defined by \[
+    \set{\abs{t} \leq \abs{s} \neq 0 \st t \in T}(A , A^+) := \set{
+      \text{ $\al \in \widetilde{\SPA}(R , R^+)(A , A^+) 
+      \st s \in A^\times$ and
+      $T / s \subs A^+$
+      }
+    }
+  \]
+  Then this is representable by $(R , R^+) \to (R\<T / s\> , R\<T / s\>^+)$
+  defined as 
+  \begin{enumerate}
+    \item Choose $I \subs R_0 \subs R$ with $R_0$ a ring of definition
+    and $I$ finitely generated ideal of definition.
+    \item Make $R[1 / s]$ into a topological ring by 
+    using the ideal and ring of definition 
+    $I R_0 [T / s] \subs R_0[T / s] \subs R[1 / s]$.
+    \item Complete the Huber ring $R[1 / s]$ 
+    which can be computed as \begin{align*}
+      \widehat{R[1 / s]} := 
+      \widehat{R[1/s]}_0 \otimes_{R_0[T / s]} R[1 / s] \\
+      \widehat{R[1/s]}_0 := \brkt{\LIM_{n \geq 0} \frac{R_0[T / s]}{(I R_0[T / s])^n}} 
+    \end{align*}
+    where $\widehat{R[1/s]}_0$ and $I \widehat{R[1/s]}_0$ serves as
+    a ring and ideal of definition.
+    It can be shown that $\widehat{R[1/s]}_0$
+    is precisely the topological closure of $R_0[T/s]$ inside 
+    $\widehat{R[1 / s]}$.
+    \item Define $R[1 / s]^+$ as the integral closure of
+    $R^+[T / s]$ inside $R[1 / s]$.
+    Finally, define the complete Huber pair $(R\<T / s\> , R\<T / s\>^+)$
+    as \begin{align*}
+      R\<T / s\> &:= \widehat{R[1 / s]} \\
+      R\<T / s\>^+ &:= \text{topological closure of $R[1 / s]^+$ in $R\<T / s\>$}
+    \end{align*}
+  \end{enumerate}
+  \cite[Theorem 3.1.3]{SW20}
+\end{prop} 
+\begin{dfn}[Analytic topology on $\AFF$]
+  
+  A standard rational cover of $\SPA(A , A^+) \in \AFF$ is
+  a collection of morphisms $(U_t \to \SPA(A , A^+))_{t \in T}$
+  where $T \subs A$ is a finite subset with $(T) = A$ and 
+  \[
+    U_t := \set{\abs{t^\prime} \leq \abs{t} \neq 0 \st t \neq t^\prime \in T}
+  \]
+  \cite[Def. IV.2.3.1]{Mor19}
+  One can show standard rational covers
+  gives a site structure on $\AFF$.
+  We call the associated Grothendieck topology
+  the \emph{analytic topology} on $\AFF$.
+  It is subcanonical.
+\end{dfn}
+
+\begin{dfn}[Adic spaces as functors on a subcanonical site]
+
+  We say $j : U \to \SPA(R , R^+)$ is an \emph{open immersion
+  with affinoid target} when
+  it is a monomorphism of presheaves
+  and there exists a collection $(U_i)_{i\in I}$ of rational opens
+  of $\SPA(R , R^+)$ such that 
+  \begin{enumerate}
+    \item for all $i\in I$ we have $U_i \subs U$
+    \item for all $\SPA (A , A^+) \to U$,
+    there exists a standard rational cover $(W_j)_{j \in J}$ 
+    of $\SPA(A , A^+)$ such that each $W_j \to \SPA(A , A^+) \to U$ 
+    factors through some $U_i \to U$.
+  \end{enumerate}
+
+  We say $j : U \to X$ in $\PSH \AFF$ is an \emph{open immersion}
+  when the base change to all affinoids mapping into $X$ gives
+  open immersions with affinoid target.
+
+  An \emph{adic space} is a sheaf $X$ over $\AFF$ for the analytic topology
+  such that there exists a collection of open immersions $(U_i \to X)_{i \in I}$
+  where \begin{enumerate}
+    \item each $U_i$ is affinoid
+    \item for all $\SPA(A , A^+) \to X$,
+    there exists a standard rational cover $(W_j)_{j \in J}$ of $\SPA(A , A^+)$
+    such that each $W_j \to \SPA(A , A^+) \to X$ factors through some
+    $U_i \to X$.
+  \end{enumerate}
+  Such a collection is called an atlas (for the analytic topology).
+\end{dfn}
+\begin{prop}
+  
+  Let $X : I \to \AFF$ be a filtered system of affinoids
+  with transition maps which are rational localizations.
+  Let $X := \COLIM_{i \in I} X_i$ be the colimit
+  in the category of \emph{presheaves} over $\AFF$.
+  Then $X$ is in fact the colimit of the same diagram
+  in $\SH \AFF$ and is an adic space.
+\end{prop}
+\begin{proof}
+  To show the presheaf colimit is already a sheaf,
+  it follows from representables being quasi-compact.
+  The key fact is that 
+  every $\SPA (A , A^+) \to X$ admits a factoring $\SPA(A , A^+) \to X_i \to X$.
+  Then the fact that each $X_j \to X$ is an open immersion follows from
+  the fact that rational localizations of affinoids
+  are preserved under base change.
+  The key fact also implies $(X_i)_{i \in I}$ form an atlas for $X$.
+\end{proof}
+
+Here is an example to demonstrating you do not need the adic spectrum.
+\begin{eg}[Affine line over $\SPA(\bQ_p , \bZ_p)$ as an adic space]
+  We work with $\AFF / \SPA(\bQ_p , \bZ_p)$.
+  Consider the functor \[
+    \bA^1 : \SPA(A , A^+) \mapsto A
+  \]
+  We show that this is an adic space over $\SPA(\bQ_p , \bZ_p)$.
+  Consider $p \bZ_p \subs \bZ_p \subs \bQ_p[T]$.
+  We topologize $\bQ_p[t]$ using $(p^n \bZ_p)_{n \geq 0}$.
+  The ring $\bZ_p$ is integrally closed in $\bQ_p[T]$ 
+  so we have a complete Huber pair $(\bQ_p[T] , \bZ_p)$.
+  \begin{lem}
+    
+    $\widetilde{\SPA}(\bQ_p[T] , \bZ_p)$ on $\AFF / \SPA(\bQ_p , \bZ_p)$
+    is isomorphic to $\bA^1$.
+    \begin{proof1}
+      Let $a \in (A , A^+)$ with $(\bQ_p , \bZ_p) \to (A , A^+)$.
+      To suffices to check the algebra morphism $\bQ_p[T] \to A , T \mapsto a$
+      is continuous.
+      Pick a ring and ideal of definition $I \subs A_0 \subs A$.
+      By continuity of $\bQ_p \to A$,
+      there exists $n \geq 0$ with $p^n \bZ_p \subs \bQ_p$ landing in $I$.
+      This implies $p^n \bZ_p \subs \bQ_p[T]$ also lands in $I$.
+    \end{proof1}
+  \end{lem}
+  Unfortunately, we don't know a way for checking if 
+  $(\bQ_p[T] , \bZ_p)$ is sheafy : 
+  $\bQ_p[T]$ is not finite type over the ring of definition $\bZ_p$.
+  But consider \[
+    \bD := \set{\abs{T} \leq 1} : \SPA(A , A^+) \mapsto A^+
+  \]
+  \emph{Idea : we can write $\bA^1$ as union of larger and larger disks.}
+  Let $\al : (\bQ_p , \bZ_p) \to (A , A^+)$ of complete Huber pairs.
+  Since $A^+ \subs A^\circ$,
+  there exists a ring and ideal of definition $I \subs A_0 \subs A$
+  such that $a \in A_0$.
+  \begin{enumerate}
+    \item $\bZ_p \to A_0$ : 
+    By continuity of $\bQ_p \to A$,
+    there exists $n \geq 0$ with $\bZ_p / p^n \bZ_p \to A_0 / I$.
+    Since $A_0$ is $I$-adically complete,
+    this defines a continuous morphism $\bZ_p \to A_0$
+    which is a priori different from the given map $\bZ_p \to A$.
+    However, $\bZ \to \bZ_p \to A_0 \to A$ agrees with
+    the given $\bZ \to \bZ_p \to A$.
+    Since $\bZ \subs \bZ_p$ is dense, we obtain that 
+    the two morphisms $\bZ_p \to A$ agree and hence $\bZ_p \to A_0$.
+    \item We extend $\bZ_p \to A_0$ to $\bZ_p[T] \to A_0$ by $T \mapsto a$.
+    Since $p^n \in \bZ_p[T]$ maps into $I$ we have $p^n \bZ_p[T]$
+    maps into $I$.
+    By $I$-adic completeness of $A_0$,
+    this extends uniquely to a continuous morphism \[
+      \bZ_p\< T \> := \LIM_{n \geq 0} \frac{\bZ_p[T]}{p^{n+1} \bZ_p[T]} \to A_0
+    \]
+    Since $\bZ_p \to A^+$ we have $\bZ_p[T]$ maps into $A^+$.
+    By definition of $(A , A^+)$ being complete,
+    $A^+$ is closed in $A$ under the $I$-adic topology.
+    Given that $\bZ_p[T] \to \bZ_p\<T\>$ has dense image,
+    it follows that $\bZ_p\<T \>$ is mapped into $A^+$.
+    \item By assumption, $p \in A^\times$ 
+     and $\bQ_p\<T\> := \bZ_p\< T \> \otimes_{\bZ_p[T]} \bQ_p[T]
+    = \bZ_p\<T\> \otimes_{\bZ_p[T]} \brkt{\bZ_p[T][1 / p]}
+    = \bZ_p\<T\>[1/p]$ so
+    the continuous morphism $\bZ_p\<T \> \to A^+$ extends
+    uniquely to $\bQ_p\<T \> \to A$.
+    We have rediscovered the classical Tate algebra!
+    \end{enumerate}
+  We have $\bD \simeq \SPA(\bQ_p\<T\> , \bZ_p\<T\>)$.
+  The fact that this is sheafy is 
+  Tate's acyclicity theorem.
+  \cite[Theorem 3.1.8.(3)]{SW20}
+  If we instead wanted to do $\set{\abs{T} \leq \abs{1 / p^n}} := 
+  \set{\abs{p^n T} \leq 1}$
+  parameterizing $a \in A$ such that $p^n a \in A^+$,
+  we would get $\SPA(\bQ_p\<p^n T\> , \bZ_p\<p^n T\>)$.
+  Since $A = A^+[1 / p]$ we have 
+  \[
+    \bA^1 \simeq \bigcup_{n \geq 0} \SPA(\bQ_p\<p^nT\> , \bZ_p\<p^n T\>)
+  \]
+  where the latter is a filtered colimit of affinoids
+  along rational localizations.
+  Hence $\bA^1$ is an adic space as it should be.
+
+  Just to be sure : $\bZ_p\< p T \>$ is computed by taking the inverse limit of
+  \begin{align*}
+    \bZ_p[p T] / p \bZ_p[p T] &\simeq \bF_p \\
+    \bZ_p[p T] / p^2 \bZ_p [pT] &\simeq 
+      (\bZ_p / p^2)[p T] \subs (\bZ_p / p^2)[T]\\
+    \bZ_p[pT] / p^3 \bZ_p [pT] &\simeq 
+      (\bZ_p / p^3)[p T] \subs (\bZ_p / p^3)[T]\\
+    &\vdots
+  \end{align*}
+  we obtain an injective ring morphism $\bZ_p\< pT \> \to \bZ_p[[T]]$
+  with image \[
+    \set{\sum_{n = 0}^\infty a_n p^n T^n \st \lim_{n \to \infty} \abs{a_n} = 0}
+    = \set{\sum_{n = 0}^\infty b_n T^n \st 
+    \lim_{n \to \infty} \abs{p^{-n} b_n} \to 0}
+  \]
+\end{eg}
+
+The above computation for $\set{\abs{T} \leq 1}$ generalises
+over any Tate affinoid.
+\begin{lem}
+  
+  Let $\SPA(R , R^+) \in \AFF$ which is Tate.
+  Define $\set{\abs{T} \leq 1}$ as a presheaf over $\AFF / \SPA(R , R^+)$
+  sending $\SPA (A , A^+) \mapsto A^+$.
+  Then there exists a complete Huber pair whose $\widetilde{\SPA}$
+  is isomorphic to $\set{\abs{T} \leq 1}$.
+
+  \begin{proof1}
+    By \cite[Lem. 5.1.2]{SW20}
+    the morphism $\al : (R , R^+) \to (A, A^+)$ is adic
+    i.e. there exists $I \subs R_0 \subs R$ ideal and ring of definition
+    and $A_0 \subs A$ ring of definition with 
+    $\al R_0 \subs A_0$ and $(\al I) A_0 \subs A_0$
+    giving an ideal of definition.
+    If $A_0$ is complete w.r.t. some ideal of definition,
+    then it is complete w.r.t. any ideal of definition.
+    In particular $A_0$ is $\al I$-adically complete.
+  
+    Now let $f \in A^+$.
+    There exists a ring of definition $A_0^\prime \subs A$ with 
+    $f \in A_0^\prime$.
+    There exists a ring of definition $A_0^{\prime\prime} \subs A$
+    which contains both $A_0 , A_0^\prime$.
+    Since $\al$ is adic, $(\al I) A_0^{\prime \prime} \subs A_0^{\prime\prime}$
+    is an ideal of definition.
+    So WLOG $f \in A_0$.
+    
+    We extend $R_0 \to A_0$ to $R_0[T] \to A_0$ by $T \mapsto f$.
+    We have that $I R_0[T]$ maps into $\al I$.
+    By $\al I$-adic completeness of $A_0$
+    we have a unique extension of ring morphisms 
+    \begin{cd}
+      {R_0[T]} & {A_0} \\
+      {R_0[T]^{\wedge}_{I R_0[T]}} &
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-1, to=2-1]
+      \arrow["{\exists !}"', dashed, from=2-1, to=1-2]
+      \arrow["{:=}"{description}, draw=none, from=2-1, to=2-2]
+    \end{cd}
+    We have an explicit description of the adic completion 
+    as an $R_0[T]$ algebra : 
+    \begin{align*}
+      R_0[T]^{\wedge}_{I R_0[T]} \simeq 
+      R_0\< T \> := \set{\sum_{n = 0}^\infty a_n T^n \in R_0[[T]] \st 
+      \lim_{n \to \infty} a_n = 0}
+    \end{align*}
+    This is continuous when we equip $R_0\<T\>$ with the
+    $IR_0\< T\>$-adic topology.
+    Since $R$ is Tate, there exists $\pi \in R^{\circ\circ} \cap R^\times$
+    with $R = R_0[1 / \pi]$ and $\pi \in R_0$.
+    The following ideal of a subring of a ring then defines a
+    complete Huber ring : 
+    \[
+      I R_0 \< T \> \subs R_0 \< T \> \subs R_0\< T \>[1 / \pi]
+    \]
+    We have the same explicit description : 
+    \begin{align*}
+      R_0\< T \>[1 / \pi] 
+      \simeq R\< T \> := \set{\sum_{n = 0}^\infty a_n T^n \in R[[T]]  \st 
+      \lim_{n \to \infty} a_n = 0}
+   \end{align*}
+    The morphism $R_0\<T \> \to A_0$ extends
+    uniquely to a morphism $R\< T \> \to A$ of complete Huber rings.
+  
+    So far, the ideal and ring of definition $I \subs R_0 \subs R$
+    depended on $\al$.
+    However, for any ideal of ring of definition 
+    $\widetilde{I} \subs \widetilde{R_0} \subs R$
+    and pseudo-uniformizer $\widetilde{\pi}$ of $R$
+    with $\widetilde{R_0}[1 / \widetilde{\pi}] = R$
+    and additionally $R_0 \subs \widetilde{R_0}$,
+    we have an isomorphism of complete Huber rings
+    \[
+      R\< T \> \simeq 
+      \widetilde{R_0}[T]^\wedge_{\widetilde{I_0}\widetilde{R_0}[T]}[1 / \widetilde{\pi}]
+    \]
+    Since the set of rings of definition is filtered,
+    we obtain that the topology on $R\< T \>$ is independent
+    of the choice of $I \subs R_0 \subs R$.
+    
+    Define $R\< T \>^+$ as the topological closure in $R\< T \>$
+    of the integral closure of $A^+[T]$ in $R[T]$.
+    Then the complete Huber pair $(R\< T \> , R\< T \>^+)$
+    represents $\set{\abs{T} \leq 1}$ over $\AFF / \SPA(R , R^+)$.
+  \end{proof1}
+\end{lem}
+
+\begin{eg}[The complement of $\bG_m$ in $\bA^1$]
+  
+  We continue to work over $\SPA(\bQ_p , \bZ_p)$ 
+  for simplicity. 
+  Let $\bG_m := \set{\abs{t} \neq 0} \subs \bA^1$.
+  Although $\bA^1 = \widetilde{\SPA}(\bQ_p[T] , \bZ_p)$ is not affinoid,
+  we can still compute a complete Huber pair which represents this functor.
+  \begin{enumerate}
+    \item The rings and ideal of definition for $(\bQ_p[T] , \bZ_p)$
+    are $p \bZ_p \subs \bZ_p \subs \bQ_p[T]$.
+    \item The topological ring with its ideal and ring of definition are
+    $p \bZ_p \subs \bZ_p \subs \bQ_p[T , 1/T]$.
+    \item Since $\bZ_p$ is already $p$-adically complete,
+    the completed Huber ring is still $\bQ_p[T , 1 / T]$.
+    \item Integral closure of $\bZ_p$ in $\bQ_p[T , 1 / T]$ is just $\bZ_p$.
+    This is closed so the new completed Huber pair is
+    $(\bQ_p[T , 1 / T] , \bZ_p)$.
+  \end{enumerate}
+  $\bG_m \simeq \widetilde{\SPA}(\bQ_p[T , 1/T] , \bZ_p)$
+  is a filtered colimit of closed annuli centred at the origin
+  along rational localizations and thus is an adic space.
+
+  Question : what is the complement of $\bG_m$?
+  In scheme theory, this is $\SPF \bQ_p[[T]]$.
+  To understand what's going on,
+  we first try the complement of $\bG_m \cap \bD$.
+  Let $f : \SPA(A , A^+) \to \bD$ be a morphism of affinoids.
+  This lies in the complement when for all $n \geq 0$,
+  the preimage of $\set{\abs{p^n / T} \leq 1}$ in $\SPA(A , A^+)$ is empty.
+  We have \begin{cd}
+    {\mathrm{Spa}(A , A^+)} & {\mathrm{Spa}(\mathbb{Q}_p\langle T \rangle , \mathbb{Z}_p\langle T \rangle)} \\
+    {\set{\vert p^n / f \vert \leq 1}} & {\set{\vert p^n / T \vert \leq 1}}
+    \arrow["f", from=1-1, to=1-2]
+    \arrow[from=2-1, to=1-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=90}, draw=none, from=2-1, to=1-2]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=2-2, to=1-2]
+  \end{cd}
+  Since $A$ is sheafy, $\set{\abs{p^n / f} \leq 1}$ is an affinoid.
+  \textbf{TODO the topological ring $A\< X \> / (X g - 1)$
+  is Huber for any $g \in A$ 
+  and we have an isomorphic of complete Huber rings}
+  \[
+    A\< 1 / g \> \simeq A\< X \> / (X g - 1)
+  \]
+  Claim : this is the zero ring iff $g \in A^{\circ\circ}$.
+  Assuming it is zero,
+  we have $h \in A\< X \>$ with $(X g - 1) h = 0$.
+  Writing $h = \sum_{n = 0}^\infty h_n T^n$ and expanding,
+  we find $h_n = g^n$.
+  Since $\lim_{n \to \infty} h_n = 0$ we have $g \in A^{\circ\circ}$.
+  Conversely if $g \in A^{\circ\circ}$ then
+  any $h \in A\<X\> / (Xg - 1)$ can be written as
+  $h = g^{-n} h g^n$.
+  But since $g^{-1}$ is power bounded in $A\< 1 / g \>$,
+  $g^{-\bN} h$ is bounded and so 
+  $h \in \bigcap_{n \geq 0} g^{-\bN} h g^n = (0)$.
+
+  We use the above for $g = p^{-n} f$
+  and obtain that $f$ lands in the complement of 
+  $\set{\abs{p^n / T} \leq 1}$ iff 
+  $p^{-n} f \in A^{\circ\circ}$.
+  So $f$ lands in the complement of $\bG_m \cap \bD$
+  iff $f \in \bigcap_{n \geq 0} p^{n} A^{\circ\circ} 
+  = \bigcap_{n \geq 0} p^{n} A^{\circ\circ} A^{\circ}$.
+  The same result happens for larger closed disks
+  so the complement of $\bG_m$ is 
+  \[
+    \SPA(A , A^+) \mapsto \bigcap_{n \geq 0} p^n A^\circ
+  \]
+  This is the $\dagger$-nilradical!
+\end{eg}
+
+\section{The Fargues--Fontaine curve is an adic space}
+
+We can now be precise about $Y_S$ being an adic space.
+Let $\AFF\PERF$ denote 
+the category of affinoid perfectoid characteristic $p$.
+\begin{prop}
+  
+  Let $S = \SPA (R , R^+) \in \AFF\PERF$.
+  Choose $\pi \in R^{\times} \cap R^{\circ\circ}$
+  so that $R = R^+[1 / \pi]$.
+  Define \[
+    Y_S := \set{p [\pi] \neq 0} \subs \widetilde{\SPA}(W(R^+) , W(R^+))
+  \]
+  which we restrict to a presheaf on $\AFF$.
+  Then $Y_S$ is the filtered colimit of
+  affinoids along rational localizations and hence an adic space.
+  This is independent of the choice of $\pi$.
+  Furthermore,
+  if we base change to $\bQ_p^\infty := \bQ_p(p^{1 / p^\infty})$,
+  then \[
+    Y_S \times_{\SPA(\bQ_p , \bZ_p)} \SPA(\bQ_p^\infty , \bZ_p^\infty)
+  \]
+  is a perfectoid space whose tilt is isomorphic to 
+  the perfectoid punctured unit disk over $S$
+  \[
+    S \times_{\SPA \bF_p} 
+    \SPA (\bF_p((t^{1 / p^\infty})) , \bF_p[[t^{1 / p^\infty}]]^\wedge_t)
+  \]
+\end{prop}
+We try to give extra detail in constructing the atlas 
+so that the reader knows 
+the precise amount of data that goes into constructing an adic space.
+\begin{proof}
+  A morphism $\SPA(A , A^+) \to \set{p [\pi] \neq 0}$
+  is equivalent to the data of 
+  \begin{enumerate}
+    \item a continuous ring morphism $\al W(R^+) \to A$ such that
+    \item $\al W(R^+) \subs A^+$
+    \item $\al([\pi]) \in A^\times$
+    \item $\al(p) \in A^\times$
+  \end{enumerate}
+  But $p$ is topologically nilpotent in $W(R^+)$ 
+  so for all $b > 0$ there exists
+  $a > 0$ with $\al(p)^a / \al([\pi])^b \in A^+$.
+  Similarly, for all $d > 0$ there exists $c > 0$ with
+  $\al([\pi])^c / p^d \in A^+$.
+  Thus we have \begin{align*}
+    Y_S &:= \set{p [\pi] \neq 0} = 
+    \bigcup_{a, b, c, d > 0} Y_{S , [p^{- a / b} , p^{- d / c}]} \\
+    Y_{S , [p^{- a / b} , p^{- d / c}]} 
+      &:= \set{\abs{p^a} \leq \abs{[\pi]^b} \neq 0} \cap 
+    \set{\abs{[\pi]^c} \leq \abs{p^d} \neq 0}
+  \end{align*}
+  The union is a presheaf filtered colimit.
+  We show that $Y_{S , [p^{- a / b} , p^{- d / c}]}$
+  is an affinoid over $\SPA(\bQ_p , \bZ_p)$
+  and for inclusion of such intervals
+  \begin{align*}
+    I \subs J
+    \,\,\,\,\implies \,\,\,\,
+    Y_{S, I} \subs 
+    Y_{S , J}
+    \text{ rational localization}
+  \end{align*}
+  (Rational localization) 
+  Follows from the description of $Y_{S , I}$.
+
+  (Affinoid) We have \begin{align*}
+    Y_{S, [p^{- a / b} , p^{- d / c}]}
+    = \set{
+      \abs{{p}^{a + d}} , \abs{[\pi]^{c}[\pi]^b} \leq \abs{[\pi]^b p^d \neq 0}
+      }
+  \end{align*}
+  Following the procedure to compute rational localization, we get : 
+  \begin{enumerate}
+    \item The topology on $W(R^+)$ is the so-called weak topology,
+    which comes from the bijection \[
+      (R^+)^{\bN} \map{\sim}{} W(R^+) , (x_n) \mapsto \sum_{n = 0}^\infty [x_n] p^n
+    \]
+    taking the product topology on the LHS with each $R^+$ 
+    the $\pi$-adic topology.
+    This turns out to be precisely the $(p , [\pi])$-adic topology
+    and $\pi$-adic completeness of $R^+$ implies
+    $(p , [\pi])$-adic completeness of $W(R^+)$.
+    A proof in the case of $R = F , R^+ = F^\circ$
+    with $F$ a characteristic $p$ perfect complete NA field,
+    see \cite[Prop. 1.4.11]{FF18}.
+
+    \item The underlying ring is 
+    \[
+      B_S^b := W(R^+)[1 / [\pi]^b p^d] = W(R^+)[1 / [\pi]^b , 1 / p^d]
+    \]
+
+    \item The ring of definition is
+    $W(R^+)\sqbrkt{\frac{p^{a + d}}{[\pi]^b p^d} , 
+      \frac{[\pi]^{c}[\pi^{b}]}{[\pi]^b p^d}}
+    = W(R^+)\sqbrkt{\frac{p^a}{[\pi]^b} , \frac{[\pi]^c}{p^d}}$.
+
+    \item The ideal of definition is
+    $(p , [\pi]) W(R^+)\sqbrkt{\frac{p^a}{[\pi]^b} , \frac{[\pi]^c}{p^d}}$.
+    But since we have 
+    $(p^a) \subs (p , [\pi])$
+    and $(p , [\pi])^{2 c} \subs (p)$,
+    an equivalent ideal of definition is 
+    $pW(R^+)\sqbrkt{\frac{p^a}{[\pi]^b} , \frac{[\pi]^c}{p^d}}$.
+
+    \item Our completed ring of definition is
+    thus the $p$-adic completion \[
+      B_{S , \sqbrkt{p^{- a / b} , p^{- d / c}}, 0} := 
+      W(R^+)\sqbrkt{\frac{p^a}{[\pi]^b} , \frac{[\pi]^c}{p^d}}^\wedge_p
+    \]
+    equipped with the $p$-adic topology.
+
+    \item Our completed Huber ring is \[
+      B_{S , \sqbrkt{p^{- a / b} , p^{- d / c}}} := 
+        W(R^+)\sqbrkt{\frac{p^a}{[\pi]^b} , \frac{[\pi]^c}{p^d}}^\wedge_p
+        \sqbrkt{\frac{1}{[\pi]^b} , \frac{1}{p^d}}
+      = W(R^+)\sqbrkt{\frac{p^a}{[\pi]^b} , \frac{[\pi]^c}{p^d}}^\wedge_p
+      \sqbrkt{\frac{1}{p}}
+    \]
+    because $1 = \frac{1}{p^a} \frac{p^a}{[\pi]^b} [\pi]^b$
+    implies inverting $p$ already makes $[\pi]^b$ invertible.
+
+    \item Since the integral elements of $W(R^+)$ was 
+    just $W(R^+)$,
+    to compute the new set of integral elements,
+    one must first take integral closure of 
+    $W(R^+)\sqbrkt{\frac{p^a}{[\pi]^b} , \frac{[\pi]^c}{p^d}}$
+    inside $B^b_S$,
+    then take topological closure
+    inside $B_{S , \sqbrkt{p^{- a / b} , p^{- d / c}}, 0}$.
+    \textbf{This is probably just the same ring again
+    but I struggle to compute integral closures.}
+    Since $p$ in topologically nilpotent in $W(R^+)$
+    and $p \in B_{S , [p^{- N} , p^{- 1 / M}]}^\times$,
+    our completed Huber pair receives a unique morphism
+    from $(\bQ_p , \bZ_p)$.
+  \end{enumerate}
+  For sheafiness,
+  it suffices to show the above complete Huber pair is sousperfectoid.
+  Consider the extension of NA fields $\bQ_p \to \bQ_p(p^{1 / p^\infty})$.
+  Since $\bQ_p$ is discretely valued,
+  any closed subspace of a $\bQ_p$-Banach space has a complement.
+  \cite[Prop. 10.5]{Sch13}
+  This gives a splitting of $\bQ_p \to \bQ_p(p^{1 / p^\infty})$
+  in topological $\bQ_p$-vector spaces,
+  which gives a splitting of the base change \[
+    B_{S , \sqbrkt{p^{- a / b} , p^{- d / c}}} \to 
+    \bQ_p(p^{1 / p^\infty}) \widehat{\otimes}_{\bQ_p} 
+    B_{S , \sqbrkt{p^{- a / b} , p^{- d / c}}}
+    =: B
+  \]
+  in topological $B_{S , \sqbrkt{p^{- a / b} , p^{- d / c}}}$-modules.
+  We are now reduced to the final statement.
+  
+  (Base change to $\bQ_p^\infty$ is perfectoid)
+  What's useful is that 
+  the topology on $B_{S , I}$ actually comes from a power-multiplicative norm.
+  \begin{lem}
+    
+    Let $\abs{\_}_R$ be a power-multiplicative norm on $R$
+    which induces its topology.
+    For $0 < \rho < 1$,
+    define \[
+    \abs{\_}_\rho : B^b_{S} \to \bR_{\geq 0} , 
+    x = \sum_{n >> -\infty} [x_n] p^n 
+    \mapsto \sup_{n \in \bZ} \abs{x_n}_R \rho^n
+    \]
+    Then this is a power-multiplicative norm
+    making $B^b_S$ into a normed $\bQ_p$-algebra.
+    For $I = [\rho_1 , \rho_2] \subs (0,1)$,
+    completing w.r.t. $\abs{\_}_{\rho_1} , \abs{\_}_{\rho_2}$
+    is the same as completing w.r.t.
+    $\abs{\_}_I := \max(\abs{\_}_{\rho_1} , \abs{\_}_{\rho_2})$.
+    \cite[Section 7.1.1]{Far24}
+  \end{lem}
+  Furthermore, it should be the case
+  when $\rho_1 = \abs{[\pi]}^{a / b} , \rho_2 = \abs{[\pi]}^{d / c}$
+  then this completion matches what we previously computed\footnote{
+    Neither \cite[Section 5.1]{KL15} nor \cite[Prop. II.1.1]{FS24}
+    is clear so this is my guess.
+  }
+  \begin{align*}
+    \set{x \in B^b_F \st \abs{x}_I \leq 1} = 
+    W(R^+)[p^a / [\pi]^b , [\pi]^c / p^d]\\
+  \end{align*}
+  Since $\bQ_p^\infty$ and $B_{S , I}$ are both 
+  $\bQ_p$-Banach algebras with power-multiplicative norms,
+  we can compute their completed tensor product easily : 
+  take closed unit balls which are $\bZ_p$-algebras,
+  take $p$-adically completion, then invert $p$.
+  I'm hoping the completed tensor product (the projective one) of
+  two power-multiplicatively normed Banach algebras
+  give another power-multiplicatively norm.
+  This gives uniformity of the base change to $\bQ_p^\infty$.
+
+  It remains to show the surjectivity of Frobenius on $B^\circ / (p)$.
+  Whatever $B^\circ$ is,
+  its reduction mod $p$ will be \[
+    B^\circ / (p) \simeq 
+    \bZ_p[p^{1/p^\infty}]^\wedge_p / (p) {\otimes}_{\bF_p}
+    W(R^+)[p^a / [\pi]^b , [\pi]^c / p^d]^\wedge_p / (p)
+  \]
+  We get \[
+    B^\circ / (p) \simeq \bF_p[t^{1 / p^\infty}] / (t) \otimes_{\bF_p}
+      R^+ / (\pi^c)
+      \simeq (R^+)[t^{1 / p^\infty}] / (\pi^c , t) 
+  \]
+  Since $R$ is perfect and $R^+$ is integrally closed,
+  $R^+$ is perfect as well.
+  This implies $R^+ / (\pi^c)$ has surjective Frobenius
+  and hence $B^\circ / (p)$ has surjective Frobenius.
+
+  (The tilt of the base change)
+  % Claim : The Frobenius $R^+ / (\pi^c) \to R^+ / (\pi^{c p})$ 
+  % is an isomorphism of rings.
+  % $R^+$ being perfect implies surjective.
+  % Now for $x \in R^+$ with $x^p = \pi^{c p} y$ with $y \in R^+$
+  % we have $(x / \pi^c)^p = y \in R^+$ and hence $x / \pi^c \in R^+$
+  % so injectivity is true.
+  % Completeness of $(R , R^+)$ implies $R^+$ is $\pi^c$-adically complete.
+  % Thus
+  % $(\pi^c , t)^{2p} \subs (\pi^{c p} , t^p) \subs (\pi^c , t)$
+  % implies we have isomorphism of rings
+  % \begin{align*}
+  %   B^{\flat , \circ} := 
+  %   \LIM_{x \mapsto x^p} B^\circ
+  %   \simeq \LIM_{x \mapsto x^p} B^\circ / (p) 
+  %   \simeq R^+[t^{1 / p^\infty}]^{\wedge}_{(\pi^c , t)}
+  %   \simeq R^+ \widehat{\otimes}_{\bF_p} \bF_p[[t^{1 / p^\infty}]]^\wedge_t
+  % \end{align*}
+  We write $Y_{S} \widehat{\otimes}_{\bQ_p} \bQ_p^\infty$
+  for the base change.
+  Any morphism from an affinoid into 
+  $Y_{S} \widehat{\otimes}_{\bQ_p} \bQ_p^\infty$
+  must factor through some 
+  $Y_{S , I} \widehat{\otimes}_{\bQ_p} \bQ_p^\infty$.
+  Since the tilt of a rational localization
+  is the ``same'' rational localization of the tilt \cite[Theorem 7.1.1]{SW20},
+  it follows that it suffices to show \[
+    (Y_{S , I} \widehat{\otimes}_{\bQ_p} \bQ_p^\infty)^\flat
+    \simeq \bD_{S , I}
+  \]
+  where $\bD_{S , I}$ is the
+  adic closed annuli over $S$ with inner and outter radii specified by $I$.
+
+  Notice that since $\bQ_p$ is Tate,
+  the morphisms $\bQ_p \to \bQ_p^\infty$ and 
+  $\bQ_p \to B_{S , I}$ of complete Tate rings are adic.
+  It follows from \cite[Prop. 5.1.5.(2), Rmk. 5.1.6]{SW20}
+  that $\bQ_p^\infty \widehat{\otimes}_{\bQ_p} B_{S , I}$
+  is the pushout in the category of complete Tate rings.
+  Thus for any $T = \SPA(A , A^+) \in \AFF\PERF$, 
+  \begin{enumerate}
+    \item a morphism of affinoids 
+    $T \to (Y_{S , I} \widehat{\otimes}_{\bQ_p} \bQ_p^\infty)^\flat $
+    is equivalent to
+    \item an untilt $T^\sharp$ together with a morphism of affinoids
+    $T^\sharp \to Y_{S , I} \widehat{\otimes}_{\bQ_p} \bQ_p^\infty$,
+    which is equivalent to
+    \item an untilt $T^\sharp$ together with a pair of morphisms
+    of affinoids 
+    \begin{align*}
+      T^\sharp \to \SPA (\bQ_p^\infty , \bQ_p^{\infty , \circ}) \\
+      T^\sharp \to \SPA (B_{S , I} , B_{S , I}^+)
+    \end{align*}
+    which is equivalent to
+    \item by the tilting correspondence,
+    a morphism of affinoids 
+    \[
+      T \to \SPA (\bF_p((t^{1 / p^\infty})) , \bF_p[[t^{1 / p^\infty}]]^\wedge_t)
+    \]
+    and an untilt $T^\sharp$ together with a continuous ring morphism 
+    \[
+      W(R^+)\sqbrkt{\frac{p^a}{[\pi]^b} , \frac{[\pi]^c}{p^d}}^\wedge_p
+      \to \cO(T^\sharp)^+
+    \]
+    Such a continuous ring morphism
+    is equivalent to a continuous ring morphism 
+    $W(R^+) \to \cO(T^\sharp)^+$ such that
+    $p^a / [\pi]^b , [\pi]^c / p^d \in \cO(T^\sharp)^+$ as well.
+    So we have a further equivalence to 
+    \item a morphism of affinoids 
+    \[
+      T \to \SPA (\bF_p((t^{1 / p^\infty})) , \bF_p[[t^{1 / p^\infty}]]^\wedge_t)
+    \]
+    and a continuous ring morphism
+    \[
+      \al : R^+ \to A^+
+    \]
+    such that $t^a / \al(\pi^b) , \al(\pi^c) / t^d$ into $A^+$,
+    where we have used $t = p^\flat$
+    and the following facts : 
+    \begin{itemize}
+      \item (Fact 1) For $R^+$ perfect and $A^\sharp$ perfectoid,
+      we have \begin{align*}
+        \set{\text{cts $W(R^+) \to A^{\sharp , \circ}$}}
+        &\map{\text{mod $p$}}{\sim}
+        \set{\text{cts $R^+ \to A^{\sharp , \circ} / (p)$}} 
+        & \text{theory of Witt vectors} \\
+        &\map{}{\sim} \set{\text{cts $R^+ \to A^\circ$}}
+        &\text{$R^+$ perfect, $A$ perfectoid}
+      \end{align*}
+      \item (Fact 2) \cite[Lem. 6.2.5]{SW20} Since $A^\sharp$ is perfectoid, 
+      we have an isomorphism of multiplicative monoids 
+      \begin{cd}
+        {\varprojlim_{x \mapsto x^p} A^{\sharp , +}} & {\varprojlim_{x \mapsto x^p} A^{\sharp , \circ}} & {\varprojlim_{x \mapsto x^p} A^\sharp} \\
+        {A^+} & {A^\circ} & A
+        \arrow["\subseteq"{description}, draw=none, from=1-1, to=1-2]
+        \arrow["\sim", from=1-1, to=2-1]
+        \arrow["\subseteq"{description}, draw=none, from=1-2, to=1-3]
+        \arrow["\sim", from=1-2, to=2-2]
+        \arrow["\sim", from=1-3, to=2-3]
+        \arrow["\subseteq"{description}, draw=none, from=2-1, to=2-2]
+        \arrow["\subseteq"{description}, draw=none, from=2-2, to=2-3]
+      \end{cd}
+      The middle vertical map has an explicit inverse 
+      $x \mapsto (x^{\sharp} , (x^{1 / p})^\sharp , \cdots)$.
+    \end{itemize}
+    Finally, this is equivalent to 
+    \item a morphism of affinoids 
+    $T \to \bD_{S , I} := \{\abs{t^a} \leq \abs{\pi^b} \neq 0 \} 
+      \cap \{\abs{\pi^c} \leq \abs{t}^d \neq 0\}$
+  \end{enumerate}
+\end{proof}
+% \begin{rmk}
+%   The case of $S = \SPA (F , F^\circ)$ 
+%   a perfectoid field was first considered in \cite{FF18}.
+%   The notation in our proof is compatible with the notation in \cite{FF18}.
+%   There is a norm-theoretic definition in this case.
+%   \cite[Def. 1.6.2]{FF18} defines $B_{F , I}$ for closed interval 
+%   $I \subs (0 , 1)$ using completion w.r.t. a family of norms.
+%   The construction we gave following \cite[Theorem 3.1.3]{SW20} agrees
+%   with the computation in \cite[Example 1.6.3]{FF18}.
+% \end{rmk}
+
+% By being more careful with the above proof,
+% one can define $Y_{S , I}$ for compact intervals $I \subs (0,1)$
+% with rational end points and show that they are affinoid.
+
+\begin{prop}
+  
+  Let $S = \SPA(A , A^+) \in \AFF\PERF$.
+  By the theory of Witt vectors,
+  the Frobenius automorphism on $S$ induces
+  an automorphism $\varphi$ of $\widetilde{\SPA}(W(R^+) , W(R^+))$,
+  and hence on $Y_S$.
+  Define \[
+    X_S := Y_S / \varphi^\bZ
+  \]
+  where the quotient is as sheaves over $\AFF$ for the analytic topology.
+  Then $X_S$ is an adic space.
+  In fact, 
+  one can obtain $X_S$ as the quotient of
+  $Y_{S , [p^{- p} , p^{-1}]}$ by identifying the rational subspaces
+  $\varphi : Y_{S , [p^{-p} , p^{-p}]} \simeq Y_{S , [p^{-1} , p^{-1}]}$.
+  In particular, $X_S$ is quasi-compact.
+\end{prop}
+The picture one should have is of the Tate elliptic curve:
+closed annuli on the punctured open unit disk
+are identified by radial scaling, forming a torus
+which looks like the complex points of an elliptic curve.
+\begin{proof}
+  Concretely, $\varphi : W(R^+) \to W(R^+)$ maps 
+  \[
+    x = \sum_{n = 0}^\infty [x_n] p^n \mapsto 
+    \sum_{n = 0}^\infty [x_n^p] p^n
+  \]
+  So if we start with $\SPA(A , A^+) \to Y_{S , [p^{- N} , p^{- 1 / M}]}$,
+  which means on $\SPA(A , A^+)$ we have
+  \[
+    \abs{p^a} \leq \abs{[\pi]^b} \text{ and } \abs{[\pi]^c} \leq \abs{p^d}
+  \]
+  Composing with $Y_S \to Y_S$ coming from $\varphi$ on algebras,
+  we get the following condition on $\SPA(A , A^+)$
+  \[
+    \abs{p^a} \leq \abs{[\pi]^{bp}} \text{ and } \abs{[\pi]^{cp}} \leq \abs{p^d}
+  \]
+  which is equivalent to 
+  $\SPA(A , A^+) \to Y_{S , [p^{- a / b p} , p^{- d / c p}]}$
+  It follows that $\varphi$ induces an isomorphism \[
+    Y_{S , [p^{- a / b} , p^{- d / c}]}\map{\varphi}{\sim} 
+    Y_{S , [p^{- a / bp} , p^{- d / cp}]} 
+  \]
+  i.e. ``the closed annuli moves towards radius 1''.
+  For closed intervals $I \subs (0,1)$ of the form
+  $I = [p^{- a / b} , p^{- d / c}]$
+  we have commutative diagrams \begin{cd}
+    {Y_{S , I}} & {Y_{S , \varphi I}} \\
+    {Y_{S , J}} & {Y_{S , \varphi J}}
+    \arrow["\varphi", from=1-1, to=1-2]
+    \arrow["\sim"', from=1-1, to=1-2]
+    \arrow["{\text{rat. loc.}}"', from=1-1, to=2-1]
+    \arrow["{\text{rat. loc.}}", from=1-2, to=2-2]
+    \arrow["\varphi"', from=2-1, to=2-2]
+    \arrow["\sim", draw=none, from=2-1, to=2-2]
+  \end{cd}
+  Identifying these affinoids under the action of $\varphi$
+  thus gives another filtered system of affinoids
+  along rational localizations.
+  It follows that the presheaf colimit is the sheaf colimit
+  and is an adic space.
+  The universal property is clear.
+
+  (Quasi-compact) 
+  For compact intervals $I \subs (0,1)$
+  such that $I \cap I^{1 / p} = \varnothing$,
+  the morphism $Y_{S , I} \to X_S$ is an open immersion.
+  Since $(0,1) = \bigcup_{n \in \bZ} [p^{- p / p^{n}} , p^{-1 / p^{n}}]$,
+  the result follows.
+\end{proof}
+
+\begin{prop}
+  Let $S = \SPA(R , R^+) \in \AFF\PERF$. Then we have
+  \[
+   Y_S^\diamond = S \times \SPD \bQ_p
+ \]\[
+   X_S^\diamond = (S \times \SPD \bQ_p) / (\varphi^\bZ \times \id)
+ \]
+ \cite[Prop. II.1.17]{FS24}
+ This is the rational version of \cite[Prop. 11.2.1]{SW20}.
+\end{prop}
+\begin{proof}
+  The description of $X_S^\diamond$ follows from
+  that of $Y_S^\diamond$.
+  For $Y_S^\diamond$, note that we have already proved
+  \begin{cd}
+    S & {S \times \SPD \bQ_p} 
+      & {(Y_S \widehat{\otimes}_{\mathbb{Q}_p} \mathbb{Q}_p^\infty)^\diamond} \\
+    \bullet & {\mathrm{Spd}\,\mathbb{Q}_p} & {\mathrm{Spd}\,\mathbb{Q}_p^\infty}
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-2, to=1-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=1-3, to=1-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-3, to=2-2]
+    \arrow[from=1-3, to=2-3]
+    \arrow[from=2-2, to=2-1]
+    \arrow[from=2-3, to=2-2]
+  \end{cd}
+  To compute $S \times \SPD \bQ_p$,
+  by descent in toposes 
+  it suffices to compute $S \times \SPD \bQ_p^\infty$
+  with its $\bZ_p^\times$ equivariant projection
+  to $\SPD \bQ_p^\infty$.
+  The computation 
+  $(Y_S \widehat{\otimes}_{\mathbb{Q}_p} \mathbb{Q}_p^\infty)^\diamond \simeq 
+  S \times D_{S}$ did exactly this.
+%  Let $T = \SPA(A , A^+) \in \AFF\PERF$.
+%  A morphism $T \to Y_S^\diamond$ is
+%  the data of : 
+%  \begin{enumerate}
+%    \item[(i)] an untilt $T^\sharp = \SPA(A^\sharp , A^{\sharp , +})$
+%    \item[(ii)] a continuous ring morphism $\al : W(R^+) \to A^\sharp$ such that
+%    \item[(iii)] $\al W(R^+) \subs A^{\sharp , +}$
+%    \item[(iv)] $[\pi]$ lands in $A^{\sharp , \times}$
+%    \item[(v)] $p$ lands in $A^{\sharp , \times}$
+%  \end{enumerate}
+%  On the other hand a morphism $T \to S \times \SPD \bQ_p$
+%  consists of \begin{enumerate}
+%    \item[(a)] an untilt $T^\sharp = \SPA(A^\sharp , A^{\sharp , +})$
+%    \item[(b)] $p \in A^{\sharp , \times}$
+%    \item[(c)] $A^{\sharp , +}$ contains $p$
+%    \item[(d)] a continuous ring morphism $R \to A$
+%    sending $R^+$ to $A^+$.
+%  \end{enumerate}
+%  The data of (i) and (a) are the same.
+%  Using facts (1) and (2) from before,
+%  (ii), (iii), (iv) together is equivalent to (c) and (d) together.
+%  Finally, under (i), (ii), (iii), (iv),
+%  we have (v) iff (b).
+\end{proof}
+
+\textbf{Warning} : the morphism $Y_S^\diamond \to S$ does \emph{not}
+come from a morphism $Y_S \to S$ of adic spaces.
+(Indeed $p$ is invertible on $Y_S$ whilst $p$ is zero on $S$.)
+Furthermore, $X_S^\diamond$ does not have a morphism to $S$
+even as pro-étale sheaves over $\AFF\PERF$.
+Nonetheless, a morphism $T \to S$ in $\AFF\PERF$ induces 
+morphisms of adic spaces $Y_T \to Y_S$ such that
+if $S \to Y_S^\diamond$ corresponds to an untilt $S^\sharp \to Y_S$
+then by \cite[Theorem 6.2.11]{SW20}
+the untilt $T^\sharp \to S^\sharp$ under the tilting equivalence
+fits in a cartesian square : 
+\begin{cd}
+  {S^\sharp} & {T^\sharp} \\
+	{Y_S} & {Y_T}
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=1-1]
+	\arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=2-2, to=2-1]
+\end{cd}
+
+We delay addressing the elephant in the room :  
+\emph{In what sense is $X_S$ a relative curve over $S$?}
+
+\section{Vector bundles on the Fargues--Fontaine curve}
+
+We study vector bundles on $X_S$.
+In the motivation,
+we got the idea for $X_S$ from the space
+$\SPEC W(\overline{\bF_p})[1 / p] / \varphi^\bZ$.
+Vector bundles on the latter are called 
+\emph{isocrystals over $\overline{\bF_p}$}.
+These are very well understood.
+We write $\breve{\bQ}_p$ for $\breve{\bQ}_p$.
+
+\begin{prop}[Dieudonné classification of isocrystals]
+  
+  Define the category $\varphi\MOD(\breve{\bQ}_p)$ 
+  of isocrystals over $\overline{\bF_p}$ as 
+  the category of finite dimensional $\breve{\bQ}_p$-vector spaces 
+  $V$ together with a linear isomorphism \[
+    \varphi_V : \varphi^* V \simeq V
+  \]
+  Then $\varphi\MOD(\breve{\bQ}_p)$ is semisimple with
+  simple objects, up to isomorphism, given by \[
+    D(\la) := (\breve{\bQ_p}[T] / (T^r - p^d) , T)
+  \]
+  with $\la = d / r \in \bQ$ , $r > 0$ , $(d , r) = 1$.
+  The division algebra $\END D(\la)$ over $\bQ_p$
+  is central with invariant $- [\la] \in \bQ / \bZ \simeq \mathrm{Br}(\bQ_p) $.
+\end{prop}
+% \begin{proof}
+%   First, one classifies the semistable objects.
+%   Using twists by rank one isocrystals,
+%   one reduces to the case of showing any semistable slope 0 $V$ 
+%   is isomorphic to direct sum of $D(0)$.
+%   This follows by showing
+%   \begin{itemize}
+%     \item $V$ has a subobject isomorphic to $D(0)$.
+%     \item all extensions of $D(0)$ by itself are trivial.
+%   \end{itemize}
+
+%   Using the classification of semistable objects of $\varphi\MOD_{\breve{E}}$,
+%   one notes that the HN formalism applies with $\deg$ swapped to $-\deg$.
+%   (i.e. Given semistable $V$ with slope $\la$, all strict subobjects
+%   also have slope $\la$.)
+%   Apparently this implies the HN filtration is split,
+%   but I don't understand why.
+% \end{proof}
+A proof of the above uses the so-called HN formalism,
+which appears in the study of vector bundles
+on curves in algebraic geometry.
+\begin{prop}[Harder--Narasimhan formalism]
+  
+  Let $C$ be an exact category\footnote{
+    Here we mean in the sense of Quillen.
+    This can be defined as full additive subcategories
+    of abelian categories which are
+    closed under isomorphisms and extensions.
+  } with two functions 
+  \[
+    \deg : \mathrm{Obj}\,C \to \bZ  
+  \]
+  \[
+    \mathrm{rk} : \mathrm{Obj}\,C \to \bN  
+  \]
+  which are additive on short exact sequences.
+  Assume the existence of an exact faithful functor
+  \[
+    F : C \to A  
+  \]
+  to an abelian category $A$ and an additive function 
+  $\mathrm{rk} : \mathrm{Obj}\,A \to \bN$ extending 
+  $\mathrm{rk} : \mathrm{Obj}\,C \to \bN$ along $F$.
+  Furthermore, require three conditions : 
+  \begin{enumerate}
+    \item $F$ induces for each $\cE \in C$ a bijection 
+    \[
+      \set{\text{strict subobjects of }\cE} \simeq 
+      \set{\text{subobjects of }F(\cE)}  
+    \]
+    where strict subobjects are subobjects fitting in a SES.
+    \item For $\cE \in C$\, $\mathrm{rk}\,\cE = 0 $ iff $\cE = 0$.
+    \item Given $u : \cE \to \cF$ in $C$ with $F(u)$ an isomorphism,
+    then $\deg \cE \leq \deg \cF$ with equality iff $u$ is an isomorphism.
+  \end{enumerate}
+  Given the above situation,
+  define the \emph{slope} of $\cE \in C$ to be 
+  \[
+    \mu(\cE) := \deg(\cE) / \mathrm{rk}\,\cE \in \bQ \cup \set{\infty}
+  \]
+  An object $\cE \in C$ is called \emph{semistable} when
+  for all non-zero strict subobjects $\cF \subs \cE$
+  we have $\mu(\cF) \leq \mu(\cE)$.
+  Then for each $\cE \in C$ there exists a filtration
+  \[
+    0 = \cE_0 \subs \cdots \subs \cE_r = \cE  
+  \]
+  unique with respect to the properties : 
+  \begin{enumerate}
+    \item $\cE_{i} / \cE_{i - 1}$ is semistable
+    \item $\mu(\cE_{i} / \cE_{i - 1})$ strictly decreasing
+    as $i$ increases.
+  \end{enumerate}
+  \cite[Section 5.5]{FF18}
+\end{prop}
+\begin{proof}
+  Skipping over many details, existence is by induction on rank of $\cE$.
+  Uniqueness is by proving that given $\cE, \cF$ semistable
+  with $\mu(\cE) > \mu(\cF)$ then $C(\cE , \cF) = 0$.
+  This can also be used to show the filtration is functorial in $\cE$.
+\end{proof}
+The point is that this applies to 
+\begin{itemize}
+  \item $C = A = \varphi\MOD_{\breve{\bQ}_p}$
+  \item $\mathrm{rk}\,V:= \dim_{\breve{Q}_p} V$
+  \item Using the observation \[
+    \pi_0 \set{\text{rank 1 isocrystals}} \simeq
+    {\breve{E}}^\times / \varphi\text{-conjugacy} \simeq \bZ
+  \]
+  define $\deg V := \deg \bigwedge^{\mathrm{rk}\,V} V$
+\end{itemize}
+To get the classification,
+one must calculate what these semistable objects are
+and show that the HN filtration splits.
+This suggests some ideas : 
+\begin{enumerate}
+  \item [Q1] Is there a functor from
+  isocrystals over $\overline{\bF_p}$ to vector bundles on $X_S$.
+  \item [Q2] Does the HN formalism apply to vector bundles on $X_S$?
+  If so, how does the classification compare with isocrystals?
+\end{enumerate}
+The answer to (Q1) is affirmative.
+\begin{dfn}[$\varphi$-modules to vector bundles on the curve]
+  
+  Let $S = \SPA(R , R^+) \in \AFF\PERF$.
+  The extension $\bar{\bF_p} \to R$ gives
+  $\breve{\bQ}_p = W(\bar{\bF_p}) \to W(R^+)$ by functoriality.
+  This induces a morphism \[
+    Y_{S} \to \SPA (\breve{\bQ}_p , \breve{\bQ}_p^\circ)
+  \]
+  so we can pullback finite dimensional vector spaces over $\breve{\bQ}_p$
+  to get vector bundles on $Y_{S}$.
+  Define \[
+    \varphi\MOD(\breve{\bQ}_p) \to \mathrm{VB}(X_{S})
+  \]
+  \[
+    (V , \varphi_V) \mapsto \cE(V , \phi_V)
+  \]
+  where the latter is 
+  obtained by taking the trivial vector bundle over $Y_{S}$ with fiber $V$,
+  then descending it along $Y_{S} \to X_{S}$ by letting
+  $\varphi$ act via $\varphi_V$.
+  We write $\cO(d / r) := \cE({D(- d / r)})$ where $D( - d / r)$ is simple.
+\end{dfn}
+To study vector bundles,
+the following GAGA result says we can WLOG work in scheme theory.
+\begin{prop}[GAGA]
+  
+  Let $(X , \cO_X)$ be a locally ringed spectral space.
+  Suppose we have a line bundle $\cO_X(1)$ such that 
+  \begin{enumerate}
+    \item there exists $N \geq 0$ such that for all $n \geq N$ 
+    and all vector bundles $\cE$ on $X$, $\cE(n)$ is globally generated.
+    \item for all vector bundles $\cE$ on $X$
+    and for all $i > 0$
+    there exists $n$ such that $H^i(X , \cE(n)) = 0$.
+  \end{enumerate}
+  Let $P := \bigoplus_{n \geq 0} H^0(X , \cO_X(n))$.
+  This is a graded ring so we can define 
+  $X^{\mathrm{alg}} := \mathrm{Proj} P$.
+  Then there exists a morphism of locally ringed spaces
+  $(X , \cO_X) \to X^{\mathrm{alg}}$ such that 
+  \begin{enumerate}
+    \item pullback induces an equivalences an equivalence of
+    categories of vector bundles
+    \item for any vector bundle $\cE$ on $X$ with
+    corresponding vector bundle $\cE^{\mathrm{alg}}$ on $X^{\mathrm{alg}}$,
+    for all $i \geq 0$
+    we have an induced isomorphism \[
+      H^i(X^{\mathrm{alg}}, \cE^{\mathrm{alg}}) \map{\sim}{}
+      H^i(X , \cE)
+    \]
+  \end{enumerate}
+  In this case, the tautological line bundle on $X^{\mathrm{alg}}$
+  pulls back to $\cO_X(1)$.
+  \cite[Prop. II.2.7]{FS24}
+\end{prop}
+The relative Fargues--Fontaine curves satisfy this.
+\begin{prop}[Schematic relative Fargues--Fontaine curve]
+  
+  Let $S$ continue to be in $\AFF\PERF$.
+  Let $\cE$ be a vector bundle on $X_S$.
+  Then there exists $N \geq 0$ such that for all $n \geq N$
+  we have a surjection for some $m \geq 0$
+  \[
+    \cO_{X_S}^m \twoheadrightarrow \cE(n)
+  \]
+  and moreover $H^{i > 0}(X_S , \cE(n)) = 0$.
+  We write $X_S^{\mathrm{alg}}$ for the scheme
+  obtained using GAGA.
+\end{prop}
+\begin{proof}
+  We can show that if $\cE$ is a vector bundle over $X_S$,
+  then $H^{i}(X_S , \cE) = 0$ for $i \neq 0 , 1$.
+  For $\cO$-modules on sheafy $(A , A^+)$ associated to 
+  finite $A$-modules, there is no higher cohomology.
+  \cite[Theorem 2.5.20]{KL15}
+  Combining this with the fact that pushforward of
+  $\cO$-modules along open immersions of ringed spaces is exact,
+  it suffices to find an open cover of $X_S$ by two affinoids.
+  For $p$ odd, take $Y_{S , [p^{-p} , p^{- (p-1) / 2 p}]}$ and 
+  $Y_{S , [p^{- (p-1)/2p} , p^{-1}]}$.
+  For $p = 2$, take $Y_{S , [1 / 4 , 3 / 8]}$ and $Y_{S , [3 / 8 , 1 / 2]}$.
+
+  See \cite[Theorem II.2.6]{FS24} for the ``ampleness'' of $\cO_{X_S}(1)$.
+\end{proof}
+We can now address the question : 
+in what sense is $X_S$ a relative curve over $S$?
+Fargues and Fontaine define curves as follows :
+\begin{dfn}
+  
+  A curve is a smooth, Noetherian, connected, separated scheme $X$
+  of Krull dimension one together with
+  a positive integer $\deg x$ for every closed point $x \in X$.
+  \cite[Def. 5.1.1]{FF18}
+
+  Let $X$ be a curve.
+  Consider the exact sequence \[
+    1 \to \cO(X)^\times \to \cM(X)^\times \map{\mathrm{div}}{} \DIV X \to \PIC X \to 0
+  \]
+  Define \[
+    \deg : \DIV X \to \bZ , \sum_{x \in \abs{X}} m_x x \mapsto 
+    \sum_{x \in \abs{X}} m_x \deg(x)
+  \]
+  We say $X$ is \emph{complete} when $\deg$ factors through $\PIC X$,
+  i.e. for any non-zero rational function $f$ we have $\deg \mathrm{div} f = 0$.
+\end{dfn}
+\begin{eg}
+  Let $k$ be a field and $X$ a smooth projective curve over $k$
+  in the usual sense.
+  Then assigning every closed point $x$ the value
+  $\deg x := [\kappa(x) : k]$ defines a curve in the sense of \cite{FF18}.
+\end{eg}
+We specialise to the case of a geometric point.
+\begin{prop}
+  
+  Let $S = \SPA(F , F^\circ)$ where
+  $F$ is a complete algebraically closed NA field of characteristic $p$.
+  Then the following is true : 
+  \begin{enumerate}
+    \item The closed points of $X_F^{\mathrm{alg}}$
+    biject with characteristic zero untilts of $F$ up to Frobenius.
+    \item $X_F^\mathrm{alg}$ is a complete curve in the sense of \cite{FF18}
+    when we set $\deg(x) = 1$ for all closed points.
+    \item For any closed point $x_{F^\sharp}$ of $X_F^{\mathrm{alg}}$,
+    the complement $X_{F}^{\mathrm{alg}}\setminus\set{x_{F^\sharp}}$
+    is the spectrum of a PID.
+  \end{enumerate}
+  \cite[Theorem 6.5.2]{FF18}
+\end{prop}
+For general $S \in \AFF\PERF$,
+one should think of $X_S$ as a family of curves
+$X_{\ka(s)}$ where $s$ ranges over points of $S$
+valued in completed algebraically closed NA fields (up to equivalence).
+
+For $S$ a geometric point, we have the following answer to (Q2) and (Q3) :
+\begin{prop}[Classification of vector bundles on the Fargues--Fontaine curve]
+  
+  Let $S = \SPA(F , F^\circ)$ where
+  $F$ is a complete algebraically closed NA field of characteristic $p$.
+  \begin{enumerate}
+    \item \cite[Prop. II.2.12]{FS24} 
+    The HN formalism applies to the category of vector bundles
+    on $X_F$ with the usual notion of degree and rank.
+    Thus every vector bundle $\cE$ has a unique exhaustive separating
+    $\bQ$-indexed filtration with factors which are semi-stable
+    with single slope and the slope strictly decreases 
+    going up towards all of $\cE$.
+    This is called the HN filtration and it is respected 
+    by morphisms of vector bundles.
+    \item \cite[Prop. II.2.13]{FS24} 
+    For $F \to F^\prime$ a continuous extension of 
+    complete algebraically closed NA fields of characteristic $p$,
+    pullback along $X_{F^\prime} \to X_F$
+    sends HN filtrations to HN filtrations.
+    \item \cite[Prop. II.2.14]{FS24}
+    The HN filtration splits and 
+    if $\cE$ is semistable with single slope $\la$,
+    then $\cE \simeq \cO_{X_F}(\la)^m$ for some $m \geq 0$.
+    Thus any vector bundle $\cE$ on $X_F$ is
+    a direct sum of vector bundles of the form 
+    $\cO_{X_F}(\la)$ for $\la \in \bQ$.
+  \end{enumerate}
+\end{prop}
+In particular,
+the functor $(V , \varphi_V) \mapsto \cE(V , \varphi_V)$
+induces a bijection on the sets of isomorphism classes of
+isocrytals over $\overline{\bF_p}$ and vector bundles on $X_F$.
+
+We will need the following computation of global sections : 
+\begin{prop}
+  Let $\la = d / r \in \bQ$ with $(d , r) = 1$ and $r > 0$.
+  \begin{cd}
+    & {d < 0} & {d = 0} & {0 < d} \\
+    {H^0(X , \mathcal{O}(d / r) )} & 0 & {\mathbb{Q}_p} & {B^{\varphi^r = p^d} \neq 0} \\
+    {H^1(X , \mathcal{O}(d / r) )} & {\text{big}} & 0 & 0
+  \end{cd}
+\end{prop}
+\begin{proof}
+  See \cite[Prop. 8.2.3]{FF18}.
+  $H^0(X , \cO) = \bQ_p$ can be done by developing a theory of Newton polygons
+  on the ring $B^b$.
+\end{proof}
+
+\section{Application : Étale fundamental group of the Fargues--Fontaine curve}
+
+Fix $F$ a complete algebraically closed NA field of characteristic $p$.
+We prove : 
+\begin{prop}
+  
+  Base change along $X_F \to X_F^{\mathrm{alg}} \to \SPEC \bQ_p$
+  induces an equivalence between finite étale morphisms
+  over $X_F$ and finite étale algebras over $\bQ_p$.
+  Consequently,
+  we have \[
+    \GAL(\overline{\bQ_p} / \bQ_p) \simeq \pi_1^{\text{ét}}(X_F , x)
+  \]
+\end{prop}
+\begin{proof}
+  We follow \cite[Theorem 13.5.7]{SW20}.
+  By GAGA, we can just work with the schematic $X := X_F^{\mathrm{alg}}$.
+  Let $\widetilde{X} \to X$ be a finite étale cover
+  and let $\cE$ be the corresponding finite étale $\cO_{X}$-algebra.
+  It suffices to show $\cE$ is a trivial vector bundle
+  since $H^0(X , \cO) = \bQ_p$.
+
+  Since $\widetilde{X} \to X$ is finite, flat, locally finitely presented,
+  $\cE$ is locally free finite rank.
+  By the classification of vector bundles on $X$,
+  we can write $\cE \simeq \cO(\la_1) \oplus \cdots \oplus \cO(\la_s)$.
+  It suffices to show all $\la_i = 0$.
+
+  Since $\cE$ is a vector bundle,
+  one has a well-defined trace map $\mathrm{tr} : \cE \to \cO_X$.
+  Étaleness implies the pairing $\cE \otimes_{\cO_X} \cE \to \cE \to \cO_X$
+  is non-generate 
+  which exhibits $\cE$ as its own $\cO_X$-linear dual.
+  \cite[\href{https://stacks.math.columbia.edu/tag/0BVH}{Tag 0BVH}]{stacks-project}
+  Since $\det (\cE^\vee) \simeq \brkt{\det \cE}^{-1}$,
+  we have $\deg \cE = \deg \cE^\vee = - \deg \cE$.
+  This implies $\sum_{s} \la_s = 0$.
+  
+  Let $\la := \max(\la_s)$ so that $\la \geq 0$.
+  It remains to show that $\la = 0$.
+  Suppose for a contradiction that $\la > 0$.
+  Then composition \[
+    \cO(\la) \otimes \cO(\la) \to \cE \otimes \cE \map{\text{mul}}{} \cE
+  \]
+  gives a global section $f \in \HOM(\cO(\la)^{\otimes 2} , \cE)
+  \simeq \HOM(\cO , \cE \otimes \cO(-2 \la)) = H^0(X , \cE \otimes \cO(- 2\la))$.
+  \begin{lem}
+  
+    For $(V , \varphi_V) , (W , \varphi_W) \in \varphi\MOD(\breve{\bQ}_p)$,
+    define \[
+      (V , \varphi_V) \otimes (W , \varphi_W) := 
+      (V \otimes W , \varphi_V \otimes \varphi_W)
+    \]
+    For $d_1 / r_1 , d_2 / r_2 \in \bQ$
+    with $(d_i , r_i) = 1$ and $r_i > 0$,
+    we have \[
+      D\brkt{\frac{d_1}{r_1}} \otimes D\brkt{\frac{d_2}{r_2}}
+      \simeq D\brkt{\frac{d_1}{r_1} + \frac{d_2}{r_2}}^{\oplus (r_1 , r_2)}
+    \]
+    Hence we have the following isomorphism of vector bundles on $X_S$ :
+    \[
+      \cO_{X_S}\brkt{\frac{d_1}{r_1}} \otimes \cO_{X_S}\brkt{\frac{d_2}{r_2}}
+      \simeq 
+      \cO_{X_S}\brkt{\frac{d_1}{r_1} + \frac{d_2}{r_2}}^{\oplus (r_1 , r_2)}
+    \]
+    \cite[Prop. 5.6.23]{FF18}
+  \end{lem}
+  By the lemma, 
+  all slopes in the decomposition of $\cE \otimes \cO(- 2\la)$ are negative,
+  so $H^0(X , \cE \otimes \cO(- 2\la)) = 0$.
+  This implies that for all $f \in H^0(X , \cO(\la)) \subs H^0(X , \cE)$
+  we have $f^2 = 0$.
+  Since $\cE$ is étale, $H^0(X , \cE)$ is a reduced ring
+  so $H^0(X , \cO(\la)) = 0$,
+  which is a contradiction because $\la > 0$.
+\end{proof}
+
+% \section{Relation to $p$-adic Hodge theory}
+
+% Let $C$ be a complete algebraically closed NA field of characteristic zero
+% and set $F := C^\flat$.
+% Choose a perfectoid pseudo-uniformizer for $C$
+% giving rise to a pseudo-uniformizer $p^\flat \in F^\circ$
+% such that we have a commutative square
+% \begin{cd}
+%   {W(F^\circ)} & {C^\circ} \\
+% 	{F^\circ} & {F^\circ / (p^\flat) \simeq C^\circ / (p)}
+% 	\arrow["\theta", from=1-1, to=1-2]
+% 	\arrow[from=1-1, to=2-1]
+% 	\arrow[from=1-2, to=2-2]
+% 	\arrow[from=2-1, to=2-2]
+% \end{cd}
+% where as usual $\xi := p - [p^\flat]$ generates $\ker \theta$.
+% Define \[
+%   A_{\mathrm{cris}} := 
+%     \brkt{W(F^\circ)\sqbrkt{\frac{\xi^n}{n!} \st n \geq 0}}^\wedge_p
+% \]
+% This is the $p$-adic completion of the divided power envelope of
+% the map $W(F^\circ) \to C^\circ / (p)$.
+% It is in fact the final pro-object in the cristalline site
+% $\mathrm{Cris}((C^\circ / (p)) / \SPEC \bZ_p)$.
+% We also have :
+% \cite[Section 1.10.3]{FF18}
+% \begin{prop}
+%   \[
+%   A_{\mathrm{cris}} \simeq 
+%   \Ga(\mathrm{Cris}((C^\circ / (p)) / \SPEC \bZ_p) , \cO)
+%   \]
+%   and taking global sections induces an equivalence
+%   between the category of $F$-isocrystals on
+%   $\mathrm{Cris}((C^\circ / (p)) / \SPEC \bZ_p)$
+%   and the category of $\varphi$-modules over $A_{\mathrm{cris}}$,
+%   i.e. finite projective modules equipped with linear isomorphism
+%   with their $\varphi$-twist.
+%   \cite[Cor. 11.1.14]{FF18} 
+% \end{prop}
+% Define $B^+_{\mathrm{cris}} := A_{\mathrm{cris}}[1 / p]$.
+% The relation to $X$ is as follows : 
+% \begin{prop}
+  
+%   We have $B^+ \subs B^+_{\mathrm{cris}}$, inducing equalities 
+%   \[
+%     (B^+_{\mathrm{cris}})^{\varphi = p^n} 
+%     = (B^+)^{\varphi = p^n} = B^{\varphi = p^n}
+%   \]
+%   and hence \[
+%     X_{F}^{\mathrm{alg}} = \mathrm{Proj}\,B^{\varphi = p^n}
+%     = \mathrm{Proj}\,(B^+)^{\varphi = p^n} 
+%     = \mathrm{Proj}\,(B^+_{\mathrm{cris}})^{\varphi = p^n} 
+%   \]
+% \end{prop}
+% \begin{proof}
+%   \cite[Section 13.5]{SW20} \cite[Prop. 4.1.3]{FF18}
+% \end{proof}
+% Now, given $G_0$ a $p$-divisible group over $C^\circ / (p)$,
+% the covariant Dieudonné module $M(G_0)$ 
+% is a finite projective $A_{\mathrm{cris}}$-module.
+% One can then make a vector bundle on $X_F^{\mathrm{alg}}$ by \[
+%   \cE(G_0) := \text{ associated to } 
+%   \bigoplus_{d \geq 0} (M[1 / p])^{\varphi = p^{d+1}}
+% \]
+
+
+\section{Proof of classification of vector bundles}
+
+Interestingly,
+\cite[Section 5.6]{FF18}
+gives a classification of vector bundles on any
+``generalised Riemann sphere'',
+which axiomitizes properties of $\bP^1$ needed to classify its vector bundles.
+
+\textbf{TODO}
+
+\section{Other facts about the curve}
+
+Other facts about the curve 
+in the case of $S$ being a geometric point
+with references from \cite{FF18}.
+
+% \begin{dfn}
+%   A Riemann sphere consists of the following : 
+%   \begin{enumerate}
+%     \item a complete curve $X$
+%     \item a closed point $\infty \in X$ with $\deg \infty = 1$
+%     \item $X \setminus \set{\infty}$ is affine
+%     \item $\PIC(X \setminus \set{x}) \simeq 0$
+%     \item $H^1(X , \cO_X(- \infty)) = 0$
+%     where $\cO_X(-\infty)$ is the ideal sheaf of $\infty$.
+%   \end{enumerate}
+% \end{dfn}
+
+\begin{prop}[Gauss norms]
+  
+  For $0 < \rho < 1$ a real number, define \[
+    \abs{\_}_\rho : B^b_{F} \to \bR_{\geq 0} , 
+    x = \sum_{n >> -\infty} [x_n] p^n 
+    \mapsto \sup_{n \in \bZ} \abs{x_n}_F \rho^n
+  \]
+  Then we have : 
+  \begin{enumerate}
+    \item \cite[Prop. 1.4.3]{FF18} 
+      $\abs{x + y}_\rho \leq \max(\abs{x}_\rho , \abs{y}_\rho)$
+    \item \cite[Remark 1.4.4]{FF18} 
+      For $\la \in \bQ_p$, $\abs{x}_\rho = \rho^{- v_p(x)}$.
+    \item \cite[Prop. 1.4.9]{FF18} 
+      $\abs{x y}_\rho = \abs{x}_\rho \abs{y}_\rho$.  
+    \item \cite[Prop. 1.4.11.(3)]{FF18}
+      The topology on $W(F^\circ)$ induced by $\abs{\_}_\rho$
+      is the $(p , [\pi])$-adic topology.
+      Consequently, $\abs{\_}_\rho$ is a norm on 
+      $B^b_F$ as a $\bQ_p$-vector space.
+    \item For $0 < a \leq b \leq c < 1$ we have 
+      $\abs{x}_b \leq \max(\abs{x}_a , \abs{x}_c)$.
+    \item \cite[Example 1.6.3]{FF18} 
+      For $I = [\rho_1 , \rho_2] \subs (0,1)$ compact interval,
+      define $B_{F , I}$ as the completion of $B^b_F$ w.r.t.
+      all the norms $\abs{\_}_\rho$ with $\rho \in I$.
+      By the previous point, this is equivalent to the completion
+      w.r.t. just the norm 
+      $\abs{\_}_I := \max(\abs{\_}_{\rho_1} , \abs{\_}_{\rho_2})$.
+      If $\rho_1 = \abs{a} , \rho_2 = \abs{b}$ for $a , b \in F^\circ$
+      then this completion matches what we previously computed
+      \begin{align*}
+        \set{x \in B^b_F \st \abs{x}_I \leq 1} = 
+          W(F^\circ)\sqbrkt{\frac{[a]}{p} , \frac{p}{[b]}} \\
+        B_{F , I} \simeq 
+          W(F^\circ)\sqbrkt{\frac{[a]}{p} , \frac{p}{[b]}}^\wedge_p[1 / p]
+      \end{align*}
+      \item \cite[Lem. 2.4.7, 2.4.8]{FF18}
+      Let $\abs{Y_{F}}$ 
+      denote the set of characteristic zero untilts of $F$ up to isomorphism.
+      For a compact interval $I \subs (0,1)$,
+      let \[
+        \abs{Y_{F , I}} := \set{y \in \abs{Y_F}\st r(y) \in I}
+      \]
+      For each $y \in \abs{Y_{F , I}}$,
+      writing $\theta_y : W(F^\circ) \to K_y$ for the surjection
+      to the untilt, it extends uniquely
+      to a continuous surjection $\theta_y : B_{F , I} \to K_y$.
+      \begin{cd}
+        {W(F^\circ)} & {B^b_F} & {B_{F , I}} \\
+        {K_y}
+        \arrow[from=1-1, to=1-2]
+        \arrow["{\theta_y}"', two heads, from=1-1, to=2-1]
+        \arrow[from=1-2, to=1-3]
+        \arrow[two heads, from=1-2, to=2-1]
+        \arrow["{\widetilde{\theta_y}}", from=1-3, to=2-1]
+      \end{cd}
+      In fact, $(\ker \theta_y) B_{F , I} = \ker \widetilde{\theta_y}$.
+      \item \cite[Theorem 2.5.1]{FF18} For compact intervals $I \subs (0,1)$,
+      $B_{F , I}$ is a PID and 
+      the previous point induces a bijection \[
+        \abs{Y_{F , I}} \map{\sim}{} \mathrm{MaxSpec}\,B_{F , I}
+      \]
+  \end{enumerate}
+\end{prop}
+
+Recall we defined $X$ by gluing $\SPA(B_{[a,b]} , B_{[a,b]^+})$.
+In fact, one can glue $\SPEC B_{[a,b]}$ in the same way
+to obtain $X^{\mathrm{alg}}$.
+It follows that the set of closed points can be obtained as \[
+  \abs{X} \simeq \abs{Y} / \varphi^\bZ
+\]
+For $y \in \abs{Y}$,
+$r(\varphi(y)) = r(y)^{1 / p}$.
+For intervals $[a , b] \subs (0,1)$ such that 
+$[a , b] \cap [a^{1 / p} , b^{1/p}] = \nothing$,
+one can show that the morphism \[
+  \SPA(B_{[a,b]} , B_{[a,b]^+}) \to X
+\]
+is an open immersion.
+\textbf{Warning} : the corresponding morphism of schemes \[
+  \SPEC B_{[a,b]} \to X^{\mathrm{alg}}
+\]
+is \emph{not} an open immersion,
+because it is not the complement of finitely many points!
+Nonetheless, we take the following definition : 
+\begin{prop}
+  
+  Let $x \in \abs{X}$ and let $y \in \abs{Y}$ be a lift of $x$.
+  This corresponds to an untilt $(C , \io)$ of $F$ over characteristic zero.
+  Let $(\xi) = \ker \theta \subs W(F^\circ) \to C^\circ$.
+  Then for any compact interval $I \subs (0,1)$
+  containing $r(y)$,
+  the morphism of schemes \[
+    \SPEC B^b \to \SPEC B_{[a,b]} \to X^{\mathrm{alg}}
+  \] 
+  induces isomorphisms of rings
+  \[
+    \brkt{B^b}^\wedge_\xi \map{\sim}{}
+    \brkt{B_{[a, b]}}^{\wedge}_{\f{m}_y} \map{\sim}{}
+    \cO_{X , x}^\wedge
+  \]
+  We identify these rings and call it $B_{\DR}^+(C)$.
+  \cite[Def. 2.7.1]{FF18}
+  This is a complete DVR.
+\end{prop}
+\begin{proof}
+  The first isomorphism is quite formal.
+  The second requires more work \cite[Theorem 6.5.2.(5)]{FF18}.
+  Complete DVR part follows from previous proposition.
+\end{proof}
+
+% Miscellaneous thoughts : 
+% \begin{enumerate}
+%   \item \cite[Def. 4.2.2.]{KL15} extended Robba ring is
+%   ``punctured dagger neighbourhood of $\abs{p} = 0$''.
+%   \item \cite[Prop. 2.3.10]{FF18} Lubin--Tate formal group laws
+% \end{enumerate}
+
+
+% We \emph{could} now use the same diagram that defines $Y_F$,
+% except now in Zariski sheaves on affines over $\bQ_p$,
+% and form the quotient by $\varphi$.
+% This does not immediately imply $X_F^{\mathrm{alg}}$ is a scheme
+% because for compact intervals $J \subsetneq I \subs (0,1)$,
+% $B_{F , I} \to B_{F , J}$ is not a Zariski localization.
+% An alternative idea is the following : 
+% Classically, there is an equivalence or categories
+% between smooth projective curves over a field $k$ and
+% field extensions of $k$ with transcendence degree one,
+% under which the Galois theory of fields coincide with
+% the Galois theory of finite étale coverings.
+% \cite{FF18} gives a construction of the schematic $X_F$
+% inspired by this.
+
+% \textbf{TODO : How can one avoid proj?}
+
+% \begin{prop}[The schematic Fargues--Fontaine curve]
+  
+%   Define the field of meromorphic functions on $Y_F , X_F$ to be
+%   \[
+%     \cM(Y_F) := \FRAC \, \cO(Y_F) \,\,\,\,
+%     \cM(X_F) := \FRAC \, \cO(X_F)
+%   \]
+%   Then the following are true : 
+%   \begin{enumerate}
+%     \item \cite[Prop. 3.5.10]{FF18} 
+%     We have $\cM(Y_F) \simeq \LIM_{I} \FRAC\,B_{F , I}$
+%     where $I$ ranges over compact intervals in $(0,1)$.
+%     \item 
+%   \end{enumerate}
+% \end{prop}
+
+\printbibliography
+
+\end{document}

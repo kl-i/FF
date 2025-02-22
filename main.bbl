@@ -1,0 +1,321 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{Far24}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=52d957089041a582d214e891d5fdeb38}{%
+           family={Fargues},
+           familyi={F\bibinitperiod},
+           given={Laurent},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{52d957089041a582d214e891d5fdeb38}
+      \strng{fullhash}{52d957089041a582d214e891d5fdeb38}
+      \strng{bibnamehash}{52d957089041a582d214e891d5fdeb38}
+      \strng{authorbibnamehash}{52d957089041a582d214e891d5fdeb38}
+      \strng{authornamehash}{52d957089041a582d214e891d5fdeb38}
+      \strng{authorfullhash}{52d957089041a582d214e891d5fdeb38}
+      \field{labelalpha}{Far24}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{EILENBERG/HAUSDORFF LECTURES ON THE GEOMETRIZATION OF THE LOCAL LANGLANDS CORRESPONDENCE}
+      \field{year}{2024}
+    \endentry
+    \entry{FF18}{book}{}
+      \name{author}{2}{}{%
+        {{hash=52d957089041a582d214e891d5fdeb38}{%
+           family={Fargues},
+           familyi={F\bibinitperiod},
+           given={Laurent},
+           giveni={L\bibinitperiod}}}%
+        {{hash=32a4a849eae57b89f38c9ccd21f3157f}{%
+           family={Fontaine},
+           familyi={F\bibinitperiod},
+           given={Jean-Marc},
+           giveni={J\bibinithyphendelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{7e20eb570d55a28977d311faa3181f76}
+      \strng{fullhash}{7e20eb570d55a28977d311faa3181f76}
+      \strng{bibnamehash}{7e20eb570d55a28977d311faa3181f76}
+      \strng{authorbibnamehash}{7e20eb570d55a28977d311faa3181f76}
+      \strng{authornamehash}{7e20eb570d55a28977d311faa3181f76}
+      \strng{authorfullhash}{7e20eb570d55a28977d311faa3181f76}
+      \field{labelalpha}{FF18}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Courbes et fibrés vectoriels en théorie de Hodge p-adique}
+      \field{year}{2018}
+    \endentry
+    \entry{FS24}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=52d957089041a582d214e891d5fdeb38}{%
+           family={Fargues},
+           familyi={F\bibinitperiod},
+           given={Laurent},
+           giveni={L\bibinitperiod}}}%
+        {{hash=bc840c61eeaaa9ae992e6d23e75c4a8a}{%
+           family={Scholze},
+           familyi={S\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{7a8ddbfd87d2fcf23cd8cb43d4e84e86}
+      \strng{fullhash}{7a8ddbfd87d2fcf23cd8cb43d4e84e86}
+      \strng{bibnamehash}{7a8ddbfd87d2fcf23cd8cb43d4e84e86}
+      \strng{authorbibnamehash}{7a8ddbfd87d2fcf23cd8cb43d4e84e86}
+      \strng{authornamehash}{7a8ddbfd87d2fcf23cd8cb43d4e84e86}
+      \strng{authorfullhash}{7a8ddbfd87d2fcf23cd8cb43d4e84e86}
+      \field{labelalpha}{FS24}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.RT}
+      \field{eprinttype}{arXiv}
+      \field{title}{Geometrization of the local Langlands correspondence}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2102.13459
+      \endverb
+    \endentry
+    \entry{Ked15}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=8f4e095d6e93adccba77009ced56703b}{%
+           family={Kedlaya},
+           familyi={K\bibinitperiod},
+           given={Kiran\bibnamedelima S.},
+           giveni={K\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{8f4e095d6e93adccba77009ced56703b}
+      \strng{fullhash}{8f4e095d6e93adccba77009ced56703b}
+      \strng{bibnamehash}{8f4e095d6e93adccba77009ced56703b}
+      \strng{authorbibnamehash}{8f4e095d6e93adccba77009ced56703b}
+      \strng{authornamehash}{8f4e095d6e93adccba77009ced56703b}
+      \strng{authorfullhash}{8f4e095d6e93adccba77009ced56703b}
+      \field{labelalpha}{Ked15}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.NT}
+      \field{eprinttype}{arXiv}
+      \field{title}{New methods for (phi, Gamma)-modules}
+      \field{year}{2015}
+      \verb{eprint}
+      \verb 1307.2937
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1307.2937
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1307.2937
+      \endverb
+    \endentry
+    \entry{KL15}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=8f4e095d6e93adccba77009ced56703b}{%
+           family={Kedlaya},
+           familyi={K\bibinitperiod},
+           given={Kiran\bibnamedelima S.},
+           giveni={K\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=7d9b71f5232361b12557a4055f07ef3b}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Ruochuan},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{59e4ab17f55b2f3ae7fb39d0c585c2c2}
+      \strng{fullhash}{59e4ab17f55b2f3ae7fb39d0c585c2c2}
+      \strng{bibnamehash}{59e4ab17f55b2f3ae7fb39d0c585c2c2}
+      \strng{authorbibnamehash}{59e4ab17f55b2f3ae7fb39d0c585c2c2}
+      \strng{authornamehash}{59e4ab17f55b2f3ae7fb39d0c585c2c2}
+      \strng{authorfullhash}{59e4ab17f55b2f3ae7fb39d0c585c2c2}
+      \field{labelalpha}{KL15}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.NT}
+      \field{eprinttype}{arXiv}
+      \field{title}{Relative p-adic Hodge theory: Foundations}
+      \field{year}{2015}
+      \verb{eprint}
+      \verb 1301.0792
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1301.0792
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1301.0792
+      \endverb
+    \endentry
+    \entry{Laf18}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=c3ee07a0707f0425bdcf3b3576f863dc}{%
+           family={Lafforgue},
+           familyi={L\bibinitperiod},
+           given={Vincent},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{c3ee07a0707f0425bdcf3b3576f863dc}
+      \strng{fullhash}{c3ee07a0707f0425bdcf3b3576f863dc}
+      \strng{bibnamehash}{c3ee07a0707f0425bdcf3b3576f863dc}
+      \strng{authorbibnamehash}{c3ee07a0707f0425bdcf3b3576f863dc}
+      \strng{authornamehash}{c3ee07a0707f0425bdcf3b3576f863dc}
+      \strng{authorfullhash}{c3ee07a0707f0425bdcf3b3576f863dc}
+      \field{labelalpha}{Laf18}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.AG}
+      \field{eprinttype}{arXiv}
+      \field{title}{Chtoucas pour les groupes réductifs et paramétrisation de Langlands globale}
+      \field{year}{2018}
+      \verb{eprint}
+      \verb 1209.5352
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1209.5352
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1209.5352
+      \endverb
+    \endentry
+    \entry{Mor19}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=aa76a002547991e6b8815e710797301e}{%
+           family={Morel},
+           familyi={M\bibinitperiod},
+           given={Sophie},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{aa76a002547991e6b8815e710797301e}
+      \strng{fullhash}{aa76a002547991e6b8815e710797301e}
+      \strng{bibnamehash}{aa76a002547991e6b8815e710797301e}
+      \strng{authorbibnamehash}{aa76a002547991e6b8815e710797301e}
+      \strng{authornamehash}{aa76a002547991e6b8815e710797301e}
+      \strng{authorfullhash}{aa76a002547991e6b8815e710797301e}
+      \field{labelalpha}{Mor19}
+      \field{sortinit}{M}
+      \field{sortinithash}{cfd219b90152c06204fab207bc6c7cab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Adic spaces}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://web.math.princeton.edu/~smorel/adic_notes.pdf
+      \endverb
+      \verb{url}
+      \verb https://web.math.princeton.edu/~smorel/adic_notes.pdf
+      \endverb
+    \endentry
+    \entry{Sch13}{book}{}
+      \name{author}{1}{}{%
+        {{hash=974c56abd961d7fc57e527b6b1225647}{%
+           family={Schneider},
+           familyi={S\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{974c56abd961d7fc57e527b6b1225647}
+      \strng{fullhash}{974c56abd961d7fc57e527b6b1225647}
+      \strng{bibnamehash}{974c56abd961d7fc57e527b6b1225647}
+      \strng{authorbibnamehash}{974c56abd961d7fc57e527b6b1225647}
+      \strng{authornamehash}{974c56abd961d7fc57e527b6b1225647}
+      \strng{authorfullhash}{974c56abd961d7fc57e527b6b1225647}
+      \field{labelalpha}{Sch13}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Nonarchimedean Functional Analysis}
+      \field{year}{2013}
+    \endentry
+    \entry{SW20}{book}{}
+      \name{author}{2}{}{%
+        {{hash=bc840c61eeaaa9ae992e6d23e75c4a8a}{%
+           family={Scholze},
+           familyi={S\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod}}}%
+        {{hash=cff1786ea67cd397366b034301c3cadd}{%
+           family={Weinstein},
+           familyi={W\bibinitperiod},
+           given={Jared},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Princeton University Press}%
+      }
+      \strng{namehash}{953acc60c95f6e6ee0f7d01631793c84}
+      \strng{fullhash}{953acc60c95f6e6ee0f7d01631793c84}
+      \strng{bibnamehash}{953acc60c95f6e6ee0f7d01631793c84}
+      \strng{authorbibnamehash}{953acc60c95f6e6ee0f7d01631793c84}
+      \strng{authornamehash}{953acc60c95f6e6ee0f7d01631793c84}
+      \strng{authorfullhash}{953acc60c95f6e6ee0f7d01631793c84}
+      \field{labelalpha}{SW20}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780691202082}
+      \field{title}{Berkeley Lectures on p-adic Geometry: (AMS-207)}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb http://www.jstor.org/stable/j.ctvs32rc9
+      \endverb
+      \verb{url}
+      \verb http://www.jstor.org/stable/j.ctvs32rc9
+      \endverb
+    \endentry
+    \entry{stacks-project}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=abb7996abcbb3ba4cf4194c8dcb595ca}{%
+           family={{Stacks Project Authors}},
+           familyi={S\bibinitperiod},
+           given={The},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{fullhash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{bibnamehash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{authorbibnamehash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{authornamehash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{authorfullhash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \field{labelalpha}{Stacks}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://stacks.math.columbia.edu}}
+      \field{shorthand}{Stacks}
+      \field{title}{\textit{Stacks Project}}
+      \field{year}{2018}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
