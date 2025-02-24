@@ -436,9 +436,9 @@ For the purposes of defining the Fargues--Fontaine curve,
 we will jump forward to describing the holomorphic functions 
 on ``$0 < \abs{p} < 1$''.
 
-\section{Defining adic spaces without using adic spectrum}
+\section{Defining analytic adic spaces without using adic spectrum}
 
-I want to define adic spaces without using adic spectrum
+I want to define analytic adic spaces without using adic spectrum
 because : 
 \begin{enumerate}
   \item As mentioned before, $W(R^+)$ is not sheafy so
@@ -457,23 +457,42 @@ because :
 In the end,
 no matter what theory of adic spaces one chooses,
 it should always be the case that a filtered colimit of
-sheafy affinoids along rational localizations gives an adic space.
+sheafy Tate affinoids along inclusions of rational domains gives an adic space.
 The relative Fargues--Fontaine curve $X_S$ will be such a colimit.
 We develop adic geometry completely analogously to 
 algebraic geometry using functor of points in the following steps : 
 \begin{enumerate}
-  \item We define affinoids as
-  dual to sheafy complete Huber pairs
-  and introduce the Grothendieck topology given by rational covers.
+  \item We define Tate affinoids as
+  dual to sheafy complete Tate--Huber pairs
+  and introduce the Grothendieck topology given by 
+  standard rational covers.
   \item
-  Define adic spaces as living in the sheaf topos over affinoids
+  Define analytic adic spaces as living in the sheaf topos over Tate affinoids
   in the same way as schemes can be defined for algebraic geometry.
 \end{enumerate}
 This is more restrictive than 
 the theory of pre-adic spaces in \cite[Section 3.4]{SW20}.
-We chose to do this because 
-we think sheafifying representables is too opaque;
-every reasonable site structure should be subcanonical.
+We chose to do restrict to sheafy complete Tate--Huber pairs because 
+\begin{enumerate}
+  \item Aesthetic reason : we think sheafifying representables is too opaque;
+  every reasonable site structure should be subcanonical.
+  \item The category of complete Huber pairs
+  does not admit pushouts.
+  This is problematic for considering site structures.
+  \item One may object that 
+  we do not need all fiber products of representables : 
+  for a site structure we only need to know arrows in covers
+  are closed under pullback along any morphism of representables.
+  However, it is unclear whether pushouts along rational localizations
+  yield rational localizations for general
+  morphisms between complete Huber pairs.
+\end{enumerate}
+The drawbacks this approach are : 
+\begin{enumerate}
+  \item We miss out on schemes and formal schemes,
+  say over $\SPA(\bZ_p , \bZ_p)$.
+  \item We have to keep things like ``$\SPA(W(\bZ_p) , W(\bZ_p))$''
+\end{enumerate}
 A different fix, which requires more machinary,
 is to realise that
 every complete Huber pair is sheafy in a derived sense,
@@ -487,17 +506,68 @@ e.g. in the Clausen--Scholze theory of analytic stacks.
   we write $\widetilde{\SPA}(A , A^+)$ for the corresponding object in
   $\widetilde{\AFF}$.
 
-  Define $\AFF \subs \widetilde{\AFF}$ as the full subcategory
-  dual to sheafy complete Huber pairs.
+  Define $\AFF_\TATE \subs \widetilde{\AFF}$ as the full subcategory
+  dual to sheafy complete Tate--Huber pairs.
   We write $\SPA (A , A^+)$ similarly.
 
-  We identify $\widetilde{\AFF} , \AFF$ with
+  We identify $\widetilde{\AFF} , \AFF_\TATE$ with
   their essential images in presheaves under the Yoneda embedding.
-  We reserve the term \emph{affinoid} for objects in $\AFF$.
+  Objects in $\AFF_\TATE$ we call \emph{Tate affinoids}.
 \end{dfn}
+
+\begin{prop}
+  
+  Let $\al : (R , R^+) \to (A , A^+), \be : (R , R^+) \to (B , B^+)$ 
+  be two morphisms 
+  of complete Huber pairs which are \emph{adic}.
+  This implies we can choose
+  rings of definitions $R_0 , A_0 , B_0$ for $R , A , B$
+  and an ideal $I \subs R_0$ of definition such that
+  $\al(I) A_0 \subs A_0$ and $\be(I) B_0 \subs B_0$ are ideals of definitions.
+  Define $C := A \otimes_R B$
+  and let $C_0 \subs C$ be the image of $ A_0 \otimes_{R_0} B_0$.
+  Then \begin{enumerate}
+    \item $C$ becomes a Huber ring by declaring $I C_0 \subs C_0$
+    to be ideal and ring of definition.
+    \item Let $C^+ \subs C$ be the integral closure of 
+    the image of $A^+ \otimes_{R^+} B^+$ in $C$.
+    Then $(C , C^+)$ is a Huber pair
+    whose completion gives the pushout
+    in the category of complete Huber pairs.
+    \footnote{
+      Before completion, it is in fact the pushout in
+      the category of Huber pairs but we do not care for non-complete
+      Huber pairs.
+    }
+  \end{enumerate}
+  Since every morphism of complete Tate--Huber rings are adic,
+  $\AFF_\TATE$ has fiber products.
+  \cite[Lem. 5.1.2]{SW20}
+\end{prop}
+
+The following example shows 
+that $\widetilde{\AFF}$ does not admit fiber products.
+
+\begin{eg}[$\widetilde{\AFF}$ does not have fiber products]
+
+  Consider $\widetilde{\SPA}(\bZ[T] , \bZ) \to \widetilde{\SPA}(\bZ , \bZ)
+  \leftarrow \SPA(\bQ_p , \bZ_p)$.
+  We can always take the fiber product in
+  $\PSH \widetilde{\AFF}$.
+  The inclusion $\widetilde{\AFF} \to \PSH \widetilde{\AFF}$
+  preserves limits so 
+  if the fiber product exists in $\widetilde{\AFF}$
+  then it must agree with the one in the presheaf category.
+  Here, $\widetilde{\SPA}(\bZ[T] , \bZ)$ 
+  is the functor $(A , A^+) \mapsto A$,
+  in other words $\bA^1$. 
+  So we are trying to compute the affine line over $\SPA(\bQ_p , \bZ_p)$.
+  We will see later that this is \emph{not} Tate affinoid.
+\end{eg}
+
 A reminder for the procedure to compute rational localizations.
 This works for $\widetilde{\AFF}$.
-\begin{prop}[Rational localization]
+\begin{prop}[Rational domains]
   Let $(R , R^+)$ be a complete Huber pair.
   Let $s \in R$ and $T \subs R$ finite subset with $TR \subs R$ open.
   Consider the subfunctor 
@@ -538,10 +608,18 @@ This works for $\widetilde{\AFF}$.
     \end{align*}
   \end{enumerate}
   \cite[Theorem 3.1.3]{SW20}
+
+  If $\al : (R , R^+) \to (A , A^+)$ is an \emph{adic} morphism
+  of complete Huber pairs,
+  then $\al(T) R \subs R$ is open.
+  \cite[Prop. III.2.5.(iv)]{Mor19}
+  Consequently, the pullback of rational domains remain representable
+  for Tate affinoids.
 \end{prop} 
-\begin{dfn}[Analytic topology on $\AFF$]
+
+\begin{dfn}[Analytic topology on $\AFF_\TATE$]
   
-  A standard rational cover of $\SPA(A , A^+) \in \AFF$ is
+  A standard rational cover of $\SPA(A , A^+) \in \AFF_\TATE$ is
   a collection of morphisms $(U_t \to \SPA(A , A^+))_{t \in T}$
   where $T \subs A$ is a finite subset with $(T) = A$ and 
   \[
@@ -549,16 +627,16 @@ This works for $\widetilde{\AFF}$.
   \]
   \cite[Def. IV.2.3.1]{Mor19}
   One can show standard rational covers
-  gives a site structure on $\AFF$.
+  gives a site structure on $\AFF_\TATE$.
   We call the associated Grothendieck topology
-  the \emph{analytic topology} on $\AFF$.
+  the \emph{analytic topology} on $\AFF_\TATE$.
   It is subcanonical.
 \end{dfn}
 
-\begin{dfn}[Adic spaces as functors on a subcanonical site]
+\begin{dfn}[Analytic adic spaces as functors on a subcanonical site]
 
-  We say $j : U \to \SPA(R , R^+)$ is an \emph{open immersion
-  with affinoid target} when
+  We say $j : U \to \SPA(R , R^+) \in \AFF_\TATE$ 
+  is an \emph{open immersion with affinoid target} when
   it is a monomorphism of presheaves
   and there exists a collection $(U_i)_{i\in I}$ of rational opens
   of $\SPA(R , R^+)$ such that 
@@ -570,14 +648,15 @@ This works for $\widetilde{\AFF}$.
     factors through some $U_i \to U$.
   \end{enumerate}
 
-  We say $j : U \to X$ in $\PSH \AFF$ is an \emph{open immersion}
+  We say $j : U \to X$ in $\PSH \AFF_\TATE$ is an \emph{open immersion}
   when the base change to all affinoids mapping into $X$ gives
   open immersions with affinoid target.
 
-  An \emph{adic space} is a sheaf $X$ over $\AFF$ for the analytic topology
+  An \emph{analytic adic space} 
+  is a sheaf $X$ over $\AFF_\TATE$ for the analytic topology
   such that there exists a collection of open immersions $(U_i \to X)_{i \in I}$
   where \begin{enumerate}
-    \item each $U_i$ is affinoid
+    \item each $U_i$ is Tate affinoid
     \item for all $\SPA(A , A^+) \to X$,
     there exists a standard rational cover $(W_j)_{j \in J}$ of $\SPA(A , A^+)$
     such that each $W_j \to \SPA(A , A^+) \to X$ factors through some
@@ -587,18 +666,19 @@ This works for $\widetilde{\AFF}$.
 \end{dfn}
 \begin{prop}
   
-  Let $X : I \to \AFF$ be a filtered system of affinoids
+  Let $X : I \to \AFF_\TATE$ be a filtered system of Tate affinoids
   with transition maps which are rational localizations.
   Let $X := \COLIM_{i \in I} X_i$ be the colimit
-  in the category of \emph{presheaves} over $\AFF$.
+  in the category of \emph{presheaves} over $\AFF_\TATE$.
   Then $X$ is in fact the colimit of the same diagram
-  in $\SH \AFF$ and is an adic space.
+  in $\SH \AFF_\TATE$ and is an adic space.
 \end{prop}
 \begin{proof}
   To show the presheaf colimit is already a sheaf,
   it follows from representables being quasi-compact.
   The key fact is that 
-  every $\SPA (A , A^+) \to X$ admits a factoring $\SPA(A , A^+) \to X_i \to X$.
+  every $\SPA (A , A^+) \to X$ admits 
+  a factoring $\SPA(A , A^+) \to X_i \to X$.
   Then the fact that each $X_j \to X$ is an open immersion follows from
   the fact that rational localizations of affinoids
   are preserved under base change.
@@ -607,7 +687,7 @@ This works for $\widetilde{\AFF}$.
 
 Here is an example to demonstrating you do not need the adic spectrum.
 \begin{eg}[Affine line over $\SPA(\bQ_p , \bZ_p)$ as an adic space]
-  We work with $\AFF / \SPA(\bQ_p , \bZ_p)$.
+  We work with $\AFF_\TATE / \SPA(\bQ_p , \bZ_p)$.
   Consider the functor \[
     \bA^1 : \SPA(A , A^+) \mapsto A
   \]
@@ -618,7 +698,7 @@ Here is an example to demonstrating you do not need the adic spectrum.
   so we have a complete Huber pair $(\bQ_p[T] , \bZ_p)$.
   \begin{lem}
     
-    $\widetilde{\SPA}(\bQ_p[T] , \bZ_p)$ on $\AFF / \SPA(\bQ_p , \bZ_p)$
+    $\widetilde{\SPA}(\bQ_p[T] , \bZ_p)$ on $\AFF_\TATE / \SPA(\bQ_p , \bZ_p)$
     is isomorphic to $\bA^1$.
     \begin{proof1}
       Let $a \in (A , A^+)$ with $(\bQ_p , \bZ_p) \to (A , A^+)$.
@@ -709,10 +789,11 @@ The above computation for $\set{\abs{T} \leq 1}$ generalises
 over any Tate affinoid.
 \begin{lem}
   
-  Let $\SPA(R , R^+) \in \AFF$ which is Tate.
-  Define $\set{\abs{T} \leq 1}$ as a presheaf over $\AFF / \SPA(R , R^+)$
+  Let $\SPA(R , R^+) \in \AFF_\TATE$.
+  Define $\set{\abs{T} \leq 1}$ as a presheaf over 
+  $\AFF_\TATE / \SPA(R , R^+)$
   sending $\SPA (A , A^+) \mapsto A^+$.
-  Then there exists a complete Huber pair whose $\widetilde{\SPA}$
+  Then there exists a complete Tate--Huber pair whose $\widetilde{\SPA}$
   is isomorphic to $\set{\abs{T} \leq 1}$.
 
   \begin{proof1}
@@ -871,7 +952,7 @@ over any Tate affinoid.
 \section{The Fargues--Fontaine curve is an adic space}
 
 We can now be precise about $Y_S$ being an adic space.
-Let $\AFF\PERF$ denote 
+Let $\AFF\PERF \subs \AFF_{\TATE}$ denote 
 the category of affinoid perfectoid characteristic $p$.
 \begin{prop}
   
@@ -881,9 +962,10 @@ the category of affinoid perfectoid characteristic $p$.
   Define \[
     Y_S := \set{p [\pi] \neq 0} \subs \widetilde{\SPA}(W(R^+) , W(R^+))
   \]
-  which we restrict to a presheaf on $\AFF$.
+  which we restrict to a presheaf on $\AFF_\TATE$.
   Then $Y_S$ is the filtered colimit of
-  affinoids along rational localizations and hence an adic space.
+  Tate affinoids along rational localizations 
+  and hence an analytic adic space.
   This is independent of the choice of $\pi$.
   Furthermore,
   if we base change to $\bQ_p^\infty := \bQ_p(p^{1 / p^\infty})$,
@@ -901,7 +983,8 @@ We try to give extra detail in constructing the atlas
 so that the reader knows 
 the precise amount of data that goes into constructing an adic space.
 \begin{proof}
-  A morphism $\SPA(A , A^+) \to \set{p [\pi] \neq 0}$
+  For $\SPA(A , A^+) \in \AFF_\TATE$,
+  a morphism $\SPA(A , A^+) \to \set{p [\pi] \neq 0}$
   is equivalent to the data of 
   \begin{enumerate}
     \item a continuous ring morphism $\al W(R^+) \to A$ such that
@@ -1007,7 +1090,7 @@ the precise amount of data that goes into constructing an adic space.
     from $(\bQ_p , \bZ_p)$.
   \end{enumerate}
   For sheafiness,
-  it suffices to show the above complete Huber pair is sousperfectoid.
+  it suffices to show the above complete Tate--Huber pair is sousperfectoid.
   Consider the extension of NA fields $\bQ_p \to \bQ_p(p^{1 / p^\infty})$.
   Since $\bQ_p$ is discretely valued,
   any closed subspace of a $\bQ_p$-Banach space has a complement.
@@ -1028,8 +1111,9 @@ the precise amount of data that goes into constructing an adic space.
   the topology on $B_{S , I}$ actually comes from a power-multiplicative norm.
   \begin{lem}
     
-    Let $\abs{\_}_R$ be a power-multiplicative norm on $R$
+    There exists a power-multiplicative norm $\abs{\_}_R$ on $R$
     which induces its topology.
+    Choose such a norm.
     For $0 < \rho < 1$,
     define \[
     \abs{\_}_\rho : B^b_{S} \to \bR_{\geq 0} , 
@@ -1818,8 +1902,7 @@ We prove :
 %   \bigoplus_{d \geq 0} (M[1 / p])^{\varphi = p^{d+1}}
 % \]
 
-
-\section{Proof of classification of vector bundles}
+\section{Reduction of the classiication to certain modifications}
 
 Interestingly,
 \cite[Section 5.6]{FF18}
@@ -1828,6 +1911,30 @@ gives a classification of vector bundles on any
 which axiomitizes properties of $\bP^1$ needed to classify its vector bundles.
 
 \textbf{TODO}
+\begin{enumerate}
+  \item classification follows from \cite[Theorem 5.6.26]{FF18}
+  \item \cite[Theorem 5.6.26]{FF18} follows from \cite[Theorem 5.6.29]{FF18}
+\end{enumerate}
+
+\section{Relation to $p$-adic Hodge theory}
+
+\textbf{TODO} \begin{enumerate}
+  \item Relation of universal covers of $p$-divisible groups 
+  associated to Lubin--Tate formal group laws to 
+  the SES of vector bundles on $X_F$
+  \[
+    0 \to \cO \to \cO(1) \to i_{\infty , *} \kappa(\infty) \to 0
+  \]
+  Lubin--Tate formal group law in height 1 dimension 1 
+  gives $r = 1 , d = 1$ hence $\cO(1)$.
+  \cite[Section II.2.1]{FS24}
+  \item conditions of \cite[Theorem 5.6.29]{FF18} : 
+  \begin{enumerate}
+    \item equivalent to surjectivity of Gross--Hopkins period morphism
+    \item implied by Drinfeld upper half plane = 
+    image of period morphism from Drinfeld tower
+  \end{enumerate}
+\end{enumerate}
 
 \section{Other facts about the curve}
 
