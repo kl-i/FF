@@ -70,7 +70,7 @@ More generally, $\ell$-adic local Langlands for $\GL_n$ and $\bQ_p$
 says there is a ``nice'' correspondence 
 \begin{align*}
   \text{$\ell$-adic reps of $\GL_n(\bQ_p)$} \leftrightarrow 
-  \text{ group morphisms $W \to \GL_n(\bZ_\ell)$}
+  \text{ group morphisms $W \to \GL_n(\overline{\bQ}_\ell)$}
 \end{align*}
 More generally still, 
 $\ell$-adic local Langlands for 
@@ -78,15 +78,16 @@ a connected reductive group $G$ over $\bQ_p$
 is about understanding the relation between \[
   \text{$\ell$-adic reps of $G(\bQ_p)$ }
   \overset{?}{\leftrightsquigarrow}
-  \text{continuous group sections $W \to \widehat{G}(\bZ_\ell) \rtimes W$}
+  \text{continuous group sections 
+    $W \to \widehat{G}(\overline{\bQ}_\ell) \rtimes W$}
 \]
 where \begin{enumerate}
   \item $\widehat{G}$ is the connected reductive group over $\bZ_\ell$
   with root datum dual to $G \times_{\bQ_p} \overline{\bQ_p}$.
   \item The Weil group $W$ acts on the root datum of 
   $G \times_{\bQ_p} \overline{\bQ_p}$
-  and hence on $\widehat{G}$ and its $\bZ_\ell$-points.
-  The semi-direct product $\widehat{G}(\bZ_\ell) \rtimes W$
+  and hence on $\widehat{G}$ and its $\overline{\bQ}_\ell$-points.
+  The semi-direct product $\widehat{G}(\overline{\bQ}_\ell) \rtimes W$
   is formed using this action.
 \end{enumerate}
 Objects on the right are called \emph{$L$-parameters}.
@@ -94,7 +95,8 @@ Objects on the right are called \emph{$L$-parameters}.
 We have the following questions : 
 \begin{enumerate}
   \item [Q1] How does the dual group $\widehat{G}$ appear?
-  \item [Q2] What does $W$ have to do with the representation theory of $G(E)$?
+  \item [Q2] What does $W$ have to do with the representation theory of 
+  $G(\bQ_p)$?
 \end{enumerate}
 The heuristic of \cite{FS24} is as follows : 
 \begin{enumerate}
@@ -987,7 +989,7 @@ the precise amount of data that goes into constructing an adic space.
   a morphism $\SPA(A , A^+) \to \set{p [\pi] \neq 0}$
   is equivalent to the data of 
   \begin{enumerate}
-    \item a continuous ring morphism $\al W(R^+) \to A$ such that
+    \item a continuous ring morphism $\al : W(R^+) \to A$ such that
     \item $\al W(R^+) \subs A^+$
     \item $\al([\pi]) \in A^\times$
     \item $\al(p) \in A^\times$
